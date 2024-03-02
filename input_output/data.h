@@ -1,3 +1,6 @@
+#ifndef DATA_H
+#define DATA_H
+
 #include <string>
 
 // Struktur untuk menyimpan data
@@ -17,3 +20,5 @@ struct Data {
 
 // Deklarasi fungsi untuk menyimpan data ke dalam file
 void saveDataToFile(const std::string& filename, const Data& data);
+
+#endif
