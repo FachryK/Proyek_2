@@ -5,7 +5,7 @@
 
 int main() {
     // Calling the function to get user input and save to a text file
-    UserInputModule::GetUserInputAndSaveToFile();
+    UserInput::inputdata();
  
     return 0;
 }
