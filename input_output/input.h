@@ -50,17 +50,17 @@ namespace UserInput {
 
         std::ofstream outputFile("siswa.txt", std::ios::app);
         if (outputFile.is_open()) {
-            outputFile << "NIS: " << siswa.NIS << "\n";
-            outputFile << "NISN: " << siswa.NISN << "\n";
-            outputFile << "Nama: " << siswa.NAMA << "\n";
-            outputFile << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << "\n";
-            outputFile << "TTL: " << siswa.TTL << "\n";
-            outputFile << "NIK: " << siswa.NIK << "\n";
-            outputFile << "No.KK: " << siswa.No_KK << "\n";
-            outputFile << "Agama: " << siswa.AGAMA << "\n";
-            outputFile << "Alamat Rumah: " << siswa.ALAMAT_RUMAH << "\n";
-            outputFile << "No.HP: " << siswa.No_HP << "\n";
-            outputFile << "Email: " << siswa.Email << "\n";
+            outputFile << "NIS: " << siswa.NIS << ", ";
+            outputFile << "NISN: " << siswa.NISN << ", ";
+            outputFile << "Nama: " << siswa.NAMA << ", ";
+            outputFile << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << ", ";
+            outputFile << "TTL: " << siswa.TTL << ", ";
+            outputFile << "NIK: " << siswa.NIK << ", ";
+            outputFile << "No.KK: " << siswa.No_KK << ", ";
+            outputFile << "Agama: " << siswa.AGAMA << ", ";
+            outputFile << "Alamat Rumah: " << siswa.ALAMAT_RUMAH << ", ";
+            outputFile << "No.HP: " << siswa.No_HP << ", ";
+            outputFile << "Email: " << siswa.Email << std::endl;
             outputFile.close();
             std::cout << "Input data siswa telah disimpan dalam siswa.txt\n";
         } else {
