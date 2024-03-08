@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 struct Siswa{
     std::string NAMA;
@@ -18,10 +19,10 @@ struct Siswa{
  
 namespace UserInput {
 
-    void inputdata() {
+    Siswa siswa;
 
-        Siswa siswa;
- 
+    void inputdata() 
+    {
         std::cout << "Masukkan NIS: ";
         std::cin >> siswa.NIS;
         std::cout << "Masukkan NISN: ";
@@ -49,7 +50,8 @@ namespace UserInput {
         std::cin >> siswa.Email;
 
         std::ofstream outputFile("siswa.txt", std::ios::app);
-        if (outputFile.is_open()) {
+        if (outputFile.is_open()) 
+        {
             outputFile << "NIS: " << siswa.NIS << ", ";
             outputFile << "NISN: " << siswa.NISN << ", ";
             outputFile << "Nama: " << siswa.NAMA << ", ";
@@ -62,8 +64,41 @@ namespace UserInput {
             outputFile << "No.HP: " << siswa.No_HP << ", ";
             outputFile << "Email: " << siswa.Email << std::endl;
             outputFile.close();
+            std::cout << "-----------------------------------------------\n";
             std::cout << "Input data siswa telah disimpan dalam siswa.txt\n";
-        } else {
+            std::cout << "-----------------------------------------------\n";
+        } 
+        else 
+        {
+            std::cerr << "Filenya tidak bisa dibuka.\n";
+        }
+    }
+
+    void outputdata()
+    {
+
+        std::ifstream inputFile("siswa.txt");
+        std::string line;
+
+        if (inputFile.is_open()) 
+        {
+            std::cout << "-----------------------------------------------\n";
+            std::cout << "                 Data Siswa:\n";
+            std::cout << "-----------------------------------------------\n";
+            while (std::getline(inputFile, line)) 
+            { 
+                std::istringstream iss(line); 
+                std::string field; 
+                while (std::getline(iss, field, ',')) 
+                {
+                    std::cout << field << std::endl; 
+                }
+                std::cout << std::endl; 
+            }
+            inputFile.close();
+        } 
+        else 
+        {
             std::cerr << "Filenya tidak bisa dibuka.\n";
         }
     }
