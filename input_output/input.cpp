@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "231511084.h"
+#include "231511084.cpp"
 
 int main() {
-    UserInput::inputdata();
-    UserInput::outputdata();
+    inputdata();
+    outputdata();
     return 0;
 }
