@@ -24,7 +24,6 @@ void enkripsi_text(char *text)
     }
     
     int panjang_hasil = panjang_text * 2 + 1;
-    // hasil_enkripsi = (char *)malloc(panjang_hasil * sizeof(char));
 
     for (int i = 0; i < panjang_text; i += 2)
     {
@@ -34,18 +33,8 @@ void enkripsi_text(char *text)
         int enkripsi1 = (key[0][0] * plain1 + key[0][1] * plain2) % RANGE_ASCII + ASCII_MIN;
         int enkripsi2 = (key[1][0] * plain1 + key[1][1] * plain2) % RANGE_ASCII + ASCII_MIN;
 
-        
-    // hasil_enkripsi[index_hasil++] = enkripsi1;
-    // hasil_enkripsi[index_hasil++] = enkripsi2;
-
         printf("%c%c",enkripsi1,enkripsi2);
     }
-
-    
-    
-    // printf("\n");
-    // hasil_enkripsi[index_hasil] ='\0';
-
 }
 
 #endif /* HILLCIPHER_ENKRIPSI_H */

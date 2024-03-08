@@ -11,14 +11,6 @@ int main()
     printf("Masukkan Text ");
     scanf("%s",text);
 
-    // char *hasil_enkripsi = NULL;
-    enkripsi_text(text/*,hasil_enkripsi*/);
-
-    
-//    free(hasil_enkripsi);
-
-    // printf("dekripsi text");
-    // dekripsi_text(text , key );
-
+    enkripsi_text(text);
     return 0;
 }
