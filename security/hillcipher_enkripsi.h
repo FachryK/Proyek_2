@@ -9,17 +9,16 @@
 #define ASCII_MAX 126
 #define RANGE_ASCII (ASCII_MAX - ASCII_MIN + 1)
 
-void enkripsi_text(char *text)
+void enkripsi_text(const void *data, int length)
 {
-    int panjang_text = strlen(text);
+    const unsigned char *text = (const unsigned char *)data;
+    int panjang_text = length;
     int key[2][2] = {{1,2},{3,1}};
 
     //menambahkan spasi jika panjang_teks bukan kelipatan 2
     if (panjang_text %2 != 0)
     {
-        text[panjang_text] = ' ';
         panjang_text++;
-        text[panjang_text] =  '\0';
     }
     
     int panjang_hasil = panjang_text * 2 + 1;
