@@ -12,8 +12,7 @@
 void enkripsi_text(char *text)
 {
     int panjang_text = strlen(text);
-    int index_hasil = 0;
-    int key[2][2] = {{3,7},{5,11}};
+    int key[2][2] = {{1,2},{3,1}};
 
     //menambahkan spasi jika panjang_teks bukan kelipatan 2
     if (panjang_text %2 != 0)
