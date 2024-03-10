@@ -9,10 +9,16 @@
 #define ASCII_MAX 126
 #define RANGE_ASCII (ASCII_MAX - ASCII_MIN + 1)
 
-void enkripsi_text(const void *data, int length)
+typedef struct {
+    int integerData;
+    char charData;
+    char *stringData;
+} EncryptionData;
+
+void enkripsi_text(const EncryptionData *data)
 {
-    const unsigned char *text = (const unsigned char *)data;
-    int panjang_text = length;
+    const unsigned char *text = (const unsigned char *)data->stringData;
+    int panjang_text = strlen(data->stringData); // Menggunakan panjang stringData
     int key[2][2] = {{1,2},{3,1}};
 
     //menambahkan spasi jika panjang_teks bukan kelipatan 2
