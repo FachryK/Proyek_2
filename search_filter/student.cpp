@@ -1,5 +1,4 @@
 #include "student.h"
-#include "input.h"
 
 // Implementasi kelas Student
 
