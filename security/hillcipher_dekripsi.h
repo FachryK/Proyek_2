@@ -7,7 +7,7 @@
 
 #define ASCII_MIN 32
 #define ASCII_MAX 126
-#define RANGE_ASCII (ASCII_MAX - ASCII_MIN + 1)
+#define RANGE_ASCII (ASCII_MAX - ASCII_MIN + 3)
 
 void dekripsi_text(char *text)
 {
@@ -15,18 +15,8 @@ void dekripsi_text(char *text)
     
     int panjang_text = strlen(text);
 
-    // //determinan
-    // int determinan = ((key[0][0]*key[1][1])-(key[0][1]*key[1][0]));
-    // if (determinan != 0)
-    // {
-    //     float invkey[2][2];
-    //     invkey[0][0] = key [1][1];
-    //     invkey[1][1] = key [0][0];
-    //     invkey[0][1] = -1 * key [0][1];
-    //     invkey[1][0] = -1 * key [1][0];
-    // }
 
-    int invkey[2][2] = {{5,16},{11,5}};
+     int invkey[2][2] = {{93, -26}, {-94, 29}};
 
     for (int i = 0; i < panjang_text; i += 2)
     {
