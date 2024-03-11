@@ -1,18 +1,16 @@
-#ifndef LOGIN_MANAGER_H
-#define LOGIN_MANAGER_H
+#ifndef LOGIN_SYSTEM_H
+#define LOGIN_SYSTEM_H
 
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <unordered_map>
+#include <sstream>
 
-class LoginManager {
-public:
-    void saveToFile(const std::unordered_map<std::string, std::string>& accounts);
-    std::unordered_map<std::string, std::string> readFromFile();
-    bool login(const std::unordered_map<std::string, std::string>& accounts, const std::string& username, const std::string& password);
-    void createAccount(std::unordered_map<std::string, std::string>& accounts);
-    void changePassword(std::unordered_map<std::string, std::string>& accounts, const std::string& username);
-};
+void login();
 
-#endif // LOGIN_MANAGER_H
+bool login(const std::string& username, const std::string& password);
+
+void registrasi();
+
+void gantiSandi();
+
+#endif // LOGIN_SYSTEM_H

@@ -9,37 +9,37 @@
 
     void inputdata() 
     {
-        std::cout << "Masukkan NIS: ";
-        std::cin >> siswa.NIS;
-        std::cout << "Masukkan NISN: ";
-        std::cin >> siswa.NISN;
-        std::cout << "Masukkan Nama: ";
-        std::cin.ignore(); 
-        std::getline(std::cin, siswa.NAMA);
-        std::cout << "Masukkan Jenis Kelamin: ";
-        std::cin >> siswa.JENIS_KELAMIN;
-        std::cout << "Masukkan TTL: ";
-        std::cin.ignore();
-        std::getline(std::cin, siswa.TTL);
-        std::cout << "Masukkan NIK: ";
-        std::cin >> siswa.NIK;
-        std::cout << "Masukkan No.KK: ";
-        std::cin >> siswa.No_KK;
-        std::cout << "Masukkan Agama: ";
-        std::cin >> siswa.AGAMA;
-        std::cout << "Masukkan Alamat Rumah: ";
-        std::cin.ignore();
-        std::getline(std::cin, siswa.ALAMAT_RUMAH);
-        std::cout << "Masukkan No.HP: ";
-        std::cin >> siswa.No_HP;
-        std::cout << "Masukkan Email: ";
-        std::cin >> siswa.Email;
+        cout << "Masukkan NIS: ";
+        cin >> siswa.NIS;
+        cout << "Masukkan NISN: ";
+        cin >> siswa.NISN;
+        cout << "Masukkan Nama: ";
+        cin.ignore(); 
+        getline(cin, siswa.NAMA);
+        cout << "Masukkan Jenis Kelamin: ";
+        cin >> siswa.JENIS_KELAMIN;
+        cout << "Masukkan TTL: ";
+        cin.ignore();
+        getline(cin, siswa.TTL);
+        cout << "Masukkan NIK: ";
+        cin >> siswa.NIK;
+        cout << "Masukkan No.KK: ";
+        cin >> siswa.No_KK;
+        cout << "Masukkan Agama: ";
+        cin >> siswa.AGAMA;
+        cout << "Masukkan Alamat Rumah: ";
+        cin.ignore();
+        getline(cin, siswa.ALAMAT_RUMAH);
+        cout << "Masukkan No.HP: ";
+        cin >> siswa.No_HP;
+        cout << "Masukkan Email: ";
+        cin >> siswa.Email;
 
-        std::string nik = enkripsi_text(siswa.NIK);
-        std::string kk = enkripsi_text(siswa.No_KK);
-        std::string alamat = enkripsi_text(siswa.ALAMAT_RUMAH);
+        string nik = enkripsi_text(siswa.NIK);
+        string kk = enkripsi_text(siswa.No_KK);
+        string alamat = enkripsi_text(siswa.ALAMAT_RUMAH);
 
-        std::ofstream outputFile("siswa.txt", std::ios::app);
+        ofstream outputFile("siswa.txt", ios::app);
         if (outputFile.is_open()) 
         {
             outputFile << "NIS: " << siswa.NIS << ", ";
@@ -52,43 +52,43 @@
             outputFile << "Agama: " << siswa.AGAMA << ", ";
             outputFile << "Alamat Rumah: " << alamat << ", ";
             outputFile << "No.HP: " << siswa.No_HP << ", ";
-            outputFile << "Email: " << siswa.Email << std::endl;
+            outputFile << "Email: " << siswa.Email << endl;
             outputFile.close();
-            std::cout << "-----------------------------------------------\n";
-            std::cout << "Input data siswa telah disimpan dalam siswa.txt\n";
-            std::cout << "-----------------------------------------------\n";
+            cout << "-----------------------------------------------\n";
+            cout << "Input data siswa telah disimpan dalam siswa.txt\n";
+            cout << "-----------------------------------------------\n";
         } 
         else 
         {
-            std::cerr << "Filenya tidak bisa dibuka.\n";
+            cerr << "Filenya tidak bisa dibuka.\n";
         }
     }
 
     void outputdata()
     {
 
-        std::ifstream inputFile("siswa.txt");
-        std::string line;
+        ifstream inputFile("siswa.txt");
+        string line;
 
         if (inputFile.is_open()) 
         {
-            std::cout << "-----------------------------------------------\n";
-            std::cout << "                 Data Siswa:\n";
-            std::cout << "-----------------------------------------------\n";
-            while (std::getline(inputFile, line)) 
+            cout << "-----------------------------------------------\n";
+            cout << "                 Data Siswa:\n";
+            cout << "-----------------------------------------------\n";
+            while (getline(inputFile, line)) 
             { 
-                std::istringstream iss(line); 
-                std::string field; 
-                while (std::getline(iss, field, ',')) 
+                istringstream iss(line); 
+                string field; 
+                while (getline(iss, field, ',')) 
                 {
-                    std::cout << field << std::endl; 
+                    cout << field << endl; 
                 }
-                std::cout << std::endl; 
+                cout << endl; 
             }
             inputFile.close();
         } 
         else 
         {
-            std::cerr << "Filenya tidak bisa dibuka.\n";
+            cerr << "Filenya tidak bisa dibuka.\n";
         }
     }

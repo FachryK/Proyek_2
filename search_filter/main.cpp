@@ -5,7 +5,6 @@ class Student
 {
 private:
     std::string name;
-    // Hapus atribut tahunMasuk
 public:
     Student(const std::string &name) : name(name) {}
 

@@ -1,72 +1,153 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "231511096.h"
-#include <cstdlib>
 
-void LoginManager::saveToFile(const std::unordered_map<std::string, std::string>& accounts) {
-    std::ofstream file("accounts.txt");
-    if (file.is_open()) {
-        for (const auto& account : accounts) {
-            file << account.first << " " << account.second << std::endl;
+void login()
+{
+    system("cls");
+
+    std::cout << "============================================================" << std::endl;
+    std::cout << "|                   SELAMAT DATANG DI                      |" << std::endl;
+    std::cout << "|                APLIKASI SAVE DATA SISWA                  |" << std::endl;
+    std::cout << "============================================================" << std::endl;
+}
+
+bool login(const std::string& username, const std::string& password)
+{
+    std::ifstream readFile("data-pengguna.txt");
+
+    if (readFile.is_open()) {
+        std::string data, cekUsername, cekPassword;
+        bool cariUsername = false;
+
+        while (getline(readFile, data) && !cariUsername) {
+            std::istringstream iss(data);
+            getline(iss, cekUsername, ',');
+            getline(iss, cekPassword, ',');
+
+            if (username == cekUsername) {
+                cariUsername = true;
+                if (password == cekPassword) {
+                    login();
+                    std::cout << "=============================================================" << std::endl;
+                    std::cout << "|                      LOGIN BERHASIL!                      |" << std::endl;
+                    std::cout << "-------------------------------------------------------------" << std::endl;
+                    std::cout << "|              Tekan enter untuk melanjutkan..              |" << std::endl;
+                    std::cout << "=============================================================" << std::endl;
+                    return true;
+                } else {
+                    login();
+                    std::cout << "============================================================" << std::endl;
+                    std::cout << "|                      PASSWORD SALAH!                     |" << std::endl;
+                    std::cout << "------------------------------------------------------------" << std::endl;
+                    std::cout << "|             Tekan enter untuk melanjutkan..              |" << std::endl;
+                    std::cout << "============================================================" << std::endl;
+                    return false;
+                }
+            }
         }
-        file.close();
-    }
-}
 
-std::unordered_map<std::string, std::string> LoginManager::readFromFile() {
-    std::unordered_map<std::string, std::string> accounts;
-    std::ifstream file("accounts.txt");
-    if (file.is_open()) {
-        std::string username, password;
-        while (file >> username >> password) {
-            accounts[username] = password;
+        if (!cariUsername) {
+            login();
+            std::cout << "============================================================" << std::endl;
+            std::cout << "|                  USERNAME TIDAK DITEMUKAN!               |" << std::endl;
+            std::cout << "------------------------------------------------------------" << std::endl;
+            std::cout << "|             Tekan enter untuk melanjutkan..              |" << std::endl;
+            std::cout << "============================================================" << std::endl;
+            return false;
         }
-        file.close();
+
+        readFile.close();
+    } else {
+        std::cout << "Gagal mengakses data pengguna";
     }
-    return accounts;
+
+    return false;
 }
 
-bool LoginManager::login(const std::unordered_map<std::string, std::string>& accounts, const std::string& username, const std::string& password) {
-    auto it = accounts.find(username);
-    if (it != accounts.end() && it->second == password) {
-        return true; // Login berhasil
-    }
-    return false; // Login gagal
-}
+void registrasi()
+{
+    login();
 
-void LoginManager::createAccount(std::unordered_map<std::string, std::string>& accounts) {
     std::string username, password;
 
-    // Meminta pengguna memasukkan username dan password baru
-    std::cout << "Masukkan username baru: ";
+    std::cout << "Registrasi Akun Baru" << std::endl;
+    std::cout << "Username : ";
     std::cin >> username;
-
-    // Memeriksa apakah username sudah ada
-    if (accounts.find(username) != accounts.end()) {
-        std::cout << "Username sudah digunakan. Buat akun dengan username yang lain.\n";
-        return;
-    }
-
-    std::cout << "Masukkan password baru: ";
+    std::cout << "Password : ";
     std::cin >> password;
 
-    // Menambahkan akun baru ke dalam unordered_map
-    accounts[username] = password;
-    std::cout << "Akun berhasil dibuat!\n";
+    std::ofstream writeFile("data-pengguna.txt", std::ios::app);
 
-    // Menyimpan ke dalam file
-    saveToFile(accounts);
+    if (writeFile.is_open()) {
+        writeFile << username << "," << password << std::endl;
+        login();
+        std::cout << "=============================================================" << std::endl;
+        std::cout << "|                   REGISTRASI BERHASIL!                    |" << std::endl;
+        std::cout << "-------------------------------------------------------------" << std::endl;
+        std::cout << "|              Tekan enter untuk melanjutkan..              |" << std::endl;
+        std::cout << "=============================================================" << std::endl;
+        writeFile.close();
+    } else {
+        std::cout << "Gagal mengakses data pengguna";
+    }
 }
 
-void LoginManager::changePassword(std::unordered_map<std::string, std::string>& accounts, const std::string& username) {
-    std::string newPassword;
+void gantiSandi()
+{
+    login();
 
-    // Meminta pengguna memasukkan password baru
-    std::cout << "Masukkan password baru: ";
-    std::cin >> newPassword;
+    std::string username, password;
 
-    // Mengganti password
-    accounts[username] = newPassword;
-    std::cout << "Password berhasil diganti!\n";
+    std::cout << "Ganti Sandi" << std::endl;
+    std::cout << "Username : ";
+    std::cin >> username;
+    std::cout << "Password Lama : ";
+    std::cin >> password;
 
-    // Menyimpan ke dalam file
-    saveToFile(accounts);
+    // implementasi ganti sandi disini sesuai kebutuhan
+    // ...
+}
+
+int main()
+{
+    login();
+
+    int choice;
+
+    std::cout << "Pilihan:" << std::endl;
+    std::cout << "1. Login" << std::endl;
+    std::cout << "2. Registrasi" << std::endl;
+    std::cout << "3. Ganti Sandi" << std::endl;
+    std::cout << "Pilih opsi: ";
+    std::cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+    {
+        std::string username, password;
+        login();
+        std::cout << "Login" << std::endl;
+        std::cout << "Username : ";
+        std::cin >> username;
+        std::cout << "Password : ";
+        std::cin >> password;
+        login(username, password);
+        break;
+    }
+    case 2:
+        registrasi();
+        break;
+    case 3:
+        gantiSandi();
+        break;
+    default:
+        login();
+        std::cout << "Pilihan tidak valid." << std::endl;
+        break;
+    }
+
+    return 0;
 }
