@@ -5,6 +5,5 @@
 
 int main() {
     inputdata();
-    outputdata();
     return 0;
 }

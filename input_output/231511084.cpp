@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include "231511084.h"
+#include "hillcipher_enkripsi.hpp"
 
     Siswa siswa;
 
@@ -34,6 +35,10 @@
         std::cout << "Masukkan Email: ";
         std::cin >> siswa.Email;
 
+        std::string nik = enkripsi_text(siswa.NIK);
+        std::string kk = enkripsi_text(siswa.No_KK);
+        std::string alamat = enkripsi_text(siswa.ALAMAT_RUMAH);
+
         std::ofstream outputFile("siswa.txt", std::ios::app);
         if (outputFile.is_open()) 
         {
@@ -42,10 +47,10 @@
             outputFile << "Nama: " << siswa.NAMA << ", ";
             outputFile << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << ", ";
             outputFile << "TTL: " << siswa.TTL << ", ";
-            outputFile << "NIK: " << siswa.NIK << ", ";
-            outputFile << "No.KK: " << siswa.No_KK << ", ";
+            outputFile << "NIK: " << nik << ", ";
+            outputFile << "No.KK: " << kk << ", ";
             outputFile << "Agama: " << siswa.AGAMA << ", ";
-            outputFile << "Alamat Rumah: " << siswa.ALAMAT_RUMAH << ", ";
+            outputFile << "Alamat Rumah: " << alamat << ", ";
             outputFile << "No.HP: " << siswa.No_HP << ", ";
             outputFile << "Email: " << siswa.Email << std::endl;
             outputFile.close();
