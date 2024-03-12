@@ -32,17 +32,13 @@ bool login(const std::string& username, const std::string& password)
                     login();
                     std::cout << "=============================================================" << std::endl;
                     std::cout << "|                      LOGIN BERHASIL!                      |" << std::endl;
-                    std::cout << "-------------------------------------------------------------" << std::endl;
-                    std::cout << "|              Tekan enter untuk melanjutkan..              |" << std::endl;
-                    std::cout << "=============================================================" << std::endl;
+        			std::cout << "=============================================================" << std::endl;
                     return true;
                 } else {
                     login();
                     std::cout << "============================================================" << std::endl;
                     std::cout << "|                      PASSWORD SALAH!                     |" << std::endl;
-                    std::cout << "------------------------------------------------------------" << std::endl;
-                    std::cout << "|             Tekan enter untuk melanjutkan..              |" << std::endl;
-                    std::cout << "============================================================" << std::endl;
+        		    std::cout << "============================================================" << std::endl;	
                     return false;
                 }
             }
@@ -52,9 +48,7 @@ bool login(const std::string& username, const std::string& password)
             login();
             std::cout << "============================================================" << std::endl;
             std::cout << "|                  USERNAME TIDAK DITEMUKAN!               |" << std::endl;
-            std::cout << "------------------------------------------------------------" << std::endl;
-            std::cout << "|             Tekan enter untuk melanjutkan..              |" << std::endl;
-            std::cout << "============================================================" << std::endl;
+        	std::cout << "============================================================" << std::endl;
             return false;
         }
 
@@ -85,8 +79,6 @@ void registrasi()
         login();
         std::cout << "=============================================================" << std::endl;
         std::cout << "|                   REGISTRASI BERHASIL!                    |" << std::endl;
-        std::cout << "-------------------------------------------------------------" << std::endl;
-        std::cout << "|              Tekan enter untuk melanjutkan..              |" << std::endl;
         std::cout << "=============================================================" << std::endl;
         writeFile.close();
     } else {
@@ -110,7 +102,7 @@ void gantiSandi()
     // ...
 }
 
-int main()
+void pilihan()
 {
     login();
 
@@ -148,6 +140,10 @@ int main()
         std::cout << "Pilihan tidak valid." << std::endl;
         break;
     }
+}
 
+int main()
+{
+    pilihan();
     return 0;
 }

@@ -1,16 +1,13 @@
-#ifndef LOGIN_SYSTEM_H
-#define LOGIN_SYSTEM_H
+#ifndef SAVE_DATA_SISWA_H
+#define SAVE_DATA_SISWA_H
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include <string>
 
 void login();
-
 bool login(const std::string& username, const std::string& password);
-
 void registrasi();
-
 void gantiSandi();
+void pilihan();
 
-#endif // LOGIN_SYSTEM_H
+#endif // SAVE_DATA_SISWA_H
+
