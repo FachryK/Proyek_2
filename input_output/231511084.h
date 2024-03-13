@@ -2,14 +2,15 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+using namespace std;
 
 struct Siswa{
-    std::string NAMA;
-    std::string JENIS_KELAMIN;
-    std::string TTL;
-    std::string AGAMA;
-    std::string ALAMAT_RUMAH;
-    std::string Email;
+    string NAMA;
+    string JENIS_KELAMIN;
+    string TTL;
+    string AGAMA;
+    string ALAMAT_RUMAH;
+    string Email;
     int NIS;
     int NISN;
     int NIK;
@@ -18,4 +19,5 @@ struct Siswa{
 };
  
 void inputdata(); 
-void outputdata(); 
+void outputdata();
+void pilihan(); 
