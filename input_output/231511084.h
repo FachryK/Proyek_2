@@ -19,4 +19,5 @@ struct Siswa{
 };
  
 void inputdata(); 
-void outputdata(); 
+void outputdata();
+void pilihan(); 

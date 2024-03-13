@@ -2,8 +2,9 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+using namespace std;
 #include "231511084.h"
-#include "hillcipher_enkripsi.hpp"
+#include "../security/hillcipher_enkripsi.hpp"
 
     Siswa siswa;
 
@@ -91,4 +92,33 @@
         {
             cerr << "Filenya tidak bisa dibuka.\n";
         }
+    }
+
+    void pilihan()
+    {
+        int choice;
+        do
+        {
+            cout << "(1) Input Data Siswa \n";
+            cout << "(2) Output Data Siswa \n";
+            cout << "(0) Exit \n";
+            cout << "Opsi      : ";
+            cin >> choice;
+            switch (choice)
+            {
+            case 1:
+                inputdata();
+                break;
+            case 2:
+                outputdata();
+                break;
+            case 0:
+                cout << "Selesai";
+                break;
+            default:
+                cout << "Pilihan tidak valid";
+                break;
+            }
+        } while (choice != 0);
+        
     }

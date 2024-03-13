@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "231511084.cpp"
+#include "231511084.h"
 
 int main() {
-    inputdata();
+    pilihan();
     return 0;
 }
