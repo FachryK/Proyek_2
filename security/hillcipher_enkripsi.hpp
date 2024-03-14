@@ -22,7 +22,7 @@ std::string enkripsi_text(int data) {
     
     const unsigned char *input = (const unsigned char *)text.c_str();
     int panjang_text = text.length();
-    int key[2][2] = {{1,2},{3,1}};
+    int key[2][2] = {{6,5},{3,4}};
 
     std::ostringstream hasil_enkripsi;
 
