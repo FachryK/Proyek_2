@@ -81,3 +81,23 @@ void dekripsi_text(const std::string &text) {
         std::cout << (char)dekripsi1 << (char)dekripsi2;
     }
 }
+
+void dekripsi_text(int data) {
+    std::ostringstream textStream;
+    textStream << data;
+    std::string text = textStream.str();
+    
+    const unsigned char *input = (const unsigned char *)text.c_str();
+    int panjang_text = text.length();
+    int invkey[2][2] = {{11, 10}, {63, 64}};
+
+    for (int i = 0; i < panjang_text; i += 2) {
+        int ciper1 = input[i] - ASCII_MIN;
+        int ciper2 = input[i + 1] - ASCII_MIN;
+
+        int dekripsi1 = (invkey[0][0] * ciper1 + invkey[0][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+        int dekripsi2 = (invkey[1][0] * ciper1 + invkey[1][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+
+        std::cout << (char)dekripsi1 << (char)dekripsi2;
+    }
+}
