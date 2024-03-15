@@ -48,7 +48,7 @@ std::string enkripsi_text(int data) {
 std::string enkripsi_text(const std::string &text) {
     const unsigned char *input = (const unsigned char *)text.c_str();
     int panjang_text = text.length();
-    int key[2][2] = {{1,2},{3,1}};
+    int key[2][2] = {{6,5},{3,4}};
 
     std::ostringstream hasil_enkripsi;
 
@@ -72,8 +72,63 @@ std::string enkripsi_text(const std::string &text) {
     return hasil_enkripsi.str();
 }
 
+void dekripsi_text(const std::string &text) {
+    const unsigned char *input = (const unsigned char *)text.c_str();
+    int panjang_text = text.length();
+    int invkey[2][2] = {{11, 10}, {63, 64}};
+
+    for (int i = 0; i < panjang_text; i += 2) {
+        int ciper1 = input[i] - ASCII_MIN;
+        int ciper2 = input[i + 1] - ASCII_MIN;
+
+        int dekripsi1 = (invkey[0][0] * ciper1 + invkey[0][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+        int dekripsi2 = (invkey[1][0] * ciper1 + invkey[1][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+
+        std::cout << (char)dekripsi1 << (char)dekripsi2;
+    }
+}
+
+void dekripsi_text(int data) {
+    std::ostringstream textStream;
+    textStream << data;
+    std::string text = textStream.str();
+    
+    const unsigned char *input = (const unsigned char *)text.c_str();
+    int panjang_text = text.length();
+    int invkey[2][2] = {{11, 10}, {63, 64}};
+
+    for (int i = 0; i < panjang_text; i += 2) {
+        int ciper1 = input[i] - ASCII_MIN;
+        int ciper2 = input[i + 1] - ASCII_MIN;
+
+        int dekripsi1 = (invkey[0][0] * ciper1 + invkey[0][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+        int dekripsi2 = (invkey[1][0] * ciper1 + invkey[1][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+
+        std::cout << (char)dekripsi1 << (char)dekripsi2;
+    }
+}
+
+// void dekripsi_text(char *text)
+// {
+//     // int key[2][2]={{3,7},{5,11}};
+    
+//     int panjang_text = strlen(text);
 
 
+//      int invkey[2][2] = {{11, 10}, {63, 64}};
+
+//     for (int i = 0; i < panjang_text; i += 2)
+//     {
+//         int ciper1 = text[i] - ASCII_MIN;
+//         int ciper2 = text[i+1] - ASCII_MIN;
+
+//         int dekripsi1 = (invkey[0][0] * ciper1 + invkey[0][1] * ciper2) % RANGE_ASCII + ASCII_MIN ;
+//         int dekripsi2 = (invkey[1][0] * ciper1 + invkey[1][1] * ciper2) % RANGE_ASCII + ASCII_MIN ;
+
+//         printf("%c%c",dekripsi1,dekripsi2);
+//     }
+    
+// }
 
 
 
@@ -154,52 +209,19 @@ std::string enkripsi_text(const std::string &text) {
 
 
 
-// void enkripsi_text(char *text)
-// {
-//     int panjang_text = strlen(text);
-//     int key[2][2] = {{1,2},{3,1}};
-
-//     //menambahkan spasi jika panjang_teks bukan kelipatan 2
-//     if (panjang_text %2 != 0)
-//     {
-//         text[panjang_text] = ' ';
-//         panjang_text++;
-//         text[panjang_text] =  '\0';
-//     }
-    
-//     int panjang_hasil = panjang_text * 2 + 1;
-
-//     for (int i = 0; i < panjang_text; i += 2)
-//     {
-//         int plain1 = text[i] - ASCII_MIN;
-//         int plain2 = text[i + 1] - ASCII_MIN;
-
-//         int enkripsi1 = (key[0][0] * plain1 + key[0][1] * plain2) % RANGE_ASCII + ASCII_MIN;
-//         int enkripsi2 = (key[1][0] * plain1 + key[1][1] * plain2) % RANGE_ASCII + ASCII_MIN;
-
-//         printf("%c%c",enkripsi1,enkripsi2);
-//     }
-// }
-
-//typedef struct {
-    int integerData;
-    char charData;
-    char *stringData;
-//} EncryptionData;
-
-/*void enkripsi_text(const EncryptionData *data)
+void enkripsi_text(char *text)
 {
-    const unsigned char *text = (const unsigned char *)data->stringData;
-    int panjang_text = strlen(data->stringData); // Menggunakan panjang stringData
-    int key[2][2] = {{1,2},{3,1}};
-
+    int panjang_text = strlen(text);
+    int key[2][2] = {{6,5},{3,4}};
     //menambahkan spasi jika panjang_teks bukan kelipatan 2
     if (panjang_text %2 != 0)
     {
+        text[panjang_text] = ' ';
         panjang_text++;
+        text[panjang_text] =  '\0';
     }
     
-    int panjang_hasil = panjang_text * 2 + 1;
+   
 
     for (int i = 0; i < panjang_text; i += 2)
     {
@@ -210,7 +232,9 @@ std::string enkripsi_text(const std::string &text) {
         int enkripsi2 = (key[1][0] * plain1 + key[1][1] * plain2) % RANGE_ASCII + ASCII_MIN;
 
         printf("%c%c",enkripsi1,enkripsi2);
-    }*/
+    }
+}
+
     
 
 #endif /* HILLCIPHER_ENKRIPSI_H */
