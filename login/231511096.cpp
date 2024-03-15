@@ -3,6 +3,7 @@
 #include <fstream> // Include library untuk operasi file input-output.
 #include <sstream> // Include library untuk operasi string stream.
 #include <cstdio> // Include library untuk menggunakan fungsi remove() dan rename().
+#include "../security/231511069.cpp"
 
 void login() // Fungsi untuk menampilkan layar selamat datang dan menu login.
 {
@@ -80,13 +81,14 @@ void registrasi() // Fungsi untuk melakukan registrasi akun baru.
 {
     login(); // Tampilkan layar selamat datang dan menu login.
 
-    std::string username, password; // Deklarasikan variabel untuk menyimpan username dan password baru.
+    std::string username, password, passenkrip; // Deklarasikan variabel untuk menyimpan username dan password baru.
 
     std::cout << "Registrasi Akun Baru" << std::endl;
     std::cout << "Username (Username harus tanpa kapital dan spasi): ";
     std::cin >> username; // Minta pengguna memasukkan username baru.
     std::cout << "Password (Password tidak boleh mengandung unsur username) : ";
     std::cin >> password; // Minta pengguna memasukkan password baru.
+    passenkrip = enkripsi_text(password);
 
     std::ifstream readFile("data-pengguna.txt"); // Buka file "data-pengguna.txt" untuk membaca data pengguna.
 
@@ -113,7 +115,7 @@ void registrasi() // Fungsi untuk melakukan registrasi akun baru.
 
             if (writeFile.is_open()) // Jika file berhasil dibuka.
             {
-                writeFile << username << "," << password << std::endl; // Tulis username dan password ke file.
+                writeFile << username << "," << passenkrip << std::endl; // Tulis username dan password ke file.
                 login(); // Tampilkan layar selamat datang dan menu login.
                 std::cout << "=============================================================" << std::endl;
                 std::cout << "|                                                            |" << std::endl;
