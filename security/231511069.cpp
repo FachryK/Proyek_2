@@ -9,7 +9,7 @@
 
 
 // Fungsi enkripsi_text dengan overload
-std::string enkripsi_text(int data) {
+std::string enkripsi_int(int data) {
     std::ostringstream textStream;
     textStream << data;
     std::string text = textStream.str();
@@ -66,10 +66,11 @@ std::string enkripsi_text(const std::string &text) {
     return hasil_enkripsi.str();
 }
 
-void dekripsi_text(const std::string &text) {
+std::string dekripsi_text(const std::string &text) {
     const unsigned char *input = (const unsigned char *)text.c_str();
     int panjang_text = text.length();
     int invkey[2][2] = {{11, 10}, {63, 64}};
+    std::ostringstream hasil_dekripsi;
 
     for (int i = 0; i < panjang_text; i += 2) {
         int ciper1 = input[i] - ASCII_MIN;
@@ -78,6 +79,30 @@ void dekripsi_text(const std::string &text) {
         int dekripsi1 = (invkey[0][0] * ciper1 + invkey[0][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
         int dekripsi2 = (invkey[1][0] * ciper1 + invkey[1][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
 
-        std::cout << (char)dekripsi1 << (char)dekripsi2;
+        hasil_dekripsi << (char)dekripsi1 << (char)dekripsi2;
     }
+    return hasil_dekripsi.str();
+}
+
+std::string dekripsi_int(int data) {
+    std::ostringstream textStream;
+    textStream << data;
+    std::string text = textStream.str();
+    
+    const unsigned char *input = (const unsigned char *)text.c_str();
+    int panjang_text = text.length();
+    int invkey[2][2] = {{11, 10}, {63, 64}};
+    std::ostringstream hasil_dekripsi;
+
+    for (int i = 0; i < panjang_text; i += 2) {
+        int ciper1 = input[i] - ASCII_MIN;
+        int ciper2 = input[i + 1] - ASCII_MIN;
+
+        int dekripsi1 = (invkey[0][0] * ciper1 + invkey[0][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+        int dekripsi2 = (invkey[1][0] * ciper1 + invkey[1][1] * ciper2) % RANGE_ASCII + ASCII_MIN;
+
+        hasil_dekripsi << (char)dekripsi1 << (char)dekripsi2;
+    }
+
+    return hasil_dekripsi.str();
 }
