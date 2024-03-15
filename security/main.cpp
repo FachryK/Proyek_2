@@ -2,8 +2,8 @@
 #include <iostream>
 
 int main() {
-    std::string encrypted1 = enkripsi_text("alvito");
-    std::string encrypted2 = enkripsi_text(2323);
+    std::string encrypted1 = enkripsi_text("2323");
+    std::string encrypted2 = enkripsi_text("12345");
 
     std::cout << "Encrypted 1: " << encrypted1 << std::endl;
     std::cout << "Encrypted 2: " << encrypted2 << std::endl;

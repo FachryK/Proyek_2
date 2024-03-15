@@ -6,11 +6,11 @@
 #include <string.h>
 #include <string>
 
-std::string enkripsi_text(int data);
+std::string enkripsi_int(int data);
 std::string enkripsi_text(const std::string &text);
 
-void dekripsi_text(const std::string &text);
-void dekripsi_text(int data);
+std::string dekripsi_text(const std::string &text);
+std::string dekripsi_int(int data);
 
 
 #endif /* HILLCIPHER_ENKRIPSI_H */
