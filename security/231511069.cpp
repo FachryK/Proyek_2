@@ -40,17 +40,24 @@ std::string enkripsi_int(int data) {
 
 
 std::string enkripsi_text(const std::string &text) {
-    const unsigned char *input = (const unsigned char *)text.c_str();
-    int panjang_text = text.length();
+    std::string modifiedText = text;
+    if (text.length() % 2 != 0) {
+        modifiedText += '0'; // Menambahkan satu karakter '0' jika panjang teks ganjil
+    }
+     const unsigned char *input = (const unsigned char *)modifiedText.c_str();
+     int panjang_text = modifiedText.length();
+
+//    const unsigned char *input = (const unsigned char *)text.c_str();
+    //int panjang_text = text.length();
     int key[2][2] = {{6,5},{3,4}};
 
     std::ostringstream hasil_enkripsi;
 
     // Menambahkan spasi jika panjang_teks bukan kelipatan 2
-    if (panjang_text % 2 != 0)
-    {
-        panjang_text++;
-    }
+    // if (panjang_text % 2 != 0)
+    // {
+    //     panjang_text++;
+    // }
 
     for (int i = 0; i < panjang_text; i += 2)
     {
@@ -81,7 +88,12 @@ std::string dekripsi_text(const std::string &text) {
 
         hasil_dekripsi << (char)dekripsi1 << (char)dekripsi2;
     }
-    return hasil_dekripsi.str();
+       std::string hasil = hasil_dekripsi.str();
+    // Hapus karakter '0' terakhir jika ada
+    if (hasil.length() > 0 && hasil[hasil.length() - 1] == '0') {
+        hasil.erase(hasil.length() - 1);
+    }
+    return hasil;
 }
 
 std::string dekripsi_int(int data) {
@@ -103,6 +115,13 @@ std::string dekripsi_int(int data) {
 
         hasil_dekripsi << (char)dekripsi1 << (char)dekripsi2;
     }
+     std::string hasil = hasil_dekripsi.str();
+    // Hapus karakter '0' terakhir jika ada
+    if (hasil.length() > 0 && hasil[hasil.length() - 1] == '0') {
+        hasil.erase(hasil.length() - 1);
+    }
 
-    return hasil_dekripsi.str();
+    return hasil;
+
+    //return hasil_dekripsi.str();
 }
