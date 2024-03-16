@@ -5,10 +5,10 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+using namespace std;
 
-void login();
+string login();
 void registrasi();
 void lupaPassword();
-void mainMenu();
 
 #endif // _231511096_H
