@@ -18,6 +18,6 @@ struct Siswa{
     int No_HP;
 };
  
-void inputdata(); 
-void outputdata();
-void pilihan(); 
+void inputdata(const string &user); 
+void outputdata(const string &user);
+void pilihan(const string &user); 

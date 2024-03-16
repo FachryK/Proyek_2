@@ -42,7 +42,7 @@ string login()
     else 
     {
         cout << "----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
-        return 0;
+        return (" ");
     }
 }
 
