@@ -34,7 +34,9 @@ bool login(const std::string& username, const std::string& password) // Fungsi u
             {
                 cariUsername = true; // Set variabel menjadi true karena username ditemukan.
 
-                if (password == cekPassword) // Jika password yang dimasukkan cocok dengan password dalam file.
+                // Dekripsi password yang tersimpan dalam file dan bandingkan dengan password yang dimasukkan.
+                std::string decryptedPassword = dekripsi_text(cekPassword);
+                if (password == decryptedPassword) // Jika password yang dimasukkan cocok dengan password dalam file.
                 {
                     login(); // Panggil fungsi login untuk menampilkan layar selamat datang.
                     std::cout << "=============================================================" << std::endl;
@@ -77,18 +79,22 @@ bool login(const std::string& username, const std::string& password) // Fungsi u
     return false; // Kembalikan nilai false jika tidak terjadi login.
 }
 
+
 void registrasi() // Fungsi untuk melakukan registrasi akun baru.
 {
     login(); // Tampilkan layar selamat datang dan menu login.
 
-    std::string username, password, passenkrip; // Deklarasikan variabel untuk menyimpan username dan password baru.
+    std::string username, password, encryptedPassword; // Deklarasikan variabel untuk menyimpan username dan password baru.
 
     std::cout << "Registrasi Akun Baru" << std::endl;
-    std::cout << "Username (Username harus tanpa kapital dan spasi): ";
+    std::cout << "(Username harus tanpa kapital dan spasi)" << std::endl;
+    std::cout << "Username : ";
     std::cin >> username; // Minta pengguna memasukkan username baru.
-    std::cout << "Password (Password tidak boleh mengandung unsur username) : ";
+    std::cout << "(Password tidak boleh sama dengan username dan memiliki huruf yang sama)" << std::endl;
+    std::cout << "(Password minimal 4 huruf dan maksimal 8 huruf dan harus berkarakter sama (angka,huruf))" << std::endl;
+    std::cout << "Password : ";
     std::cin >> password; // Minta pengguna memasukkan password baru.
-    passenkrip = enkripsi_text(password);
+    encryptedPassword = enkripsi_text(password);
 
     std::ifstream readFile("data-pengguna.txt"); // Buka file "data-pengguna.txt" untuk membaca data pengguna.
 
@@ -115,7 +121,7 @@ void registrasi() // Fungsi untuk melakukan registrasi akun baru.
 
             if (writeFile.is_open()) // Jika file berhasil dibuka.
             {
-                writeFile << username << "," << passenkrip << std::endl; // Tulis username dan password ke file.
+                writeFile << username << "," << encryptedPassword << std::endl; // Tulis username dan password ke file.
                 login(); // Tampilkan layar selamat datang dan menu login.
                 std::cout << "=============================================================" << std::endl;
                 std::cout << "|                                                            |" << std::endl;
@@ -173,12 +179,20 @@ void gantiSandi() // Fungsi untuk mengganti sandi pengguna.
             {
                 cariUsername = true; // Atur variabel menjadi true karena username ditemukan.
 
-                if (oldPassword == cekPassword) // Jika password lama yang dimasukkan cocok dengan password dalam file.
+                // Dekripsi password yang tersimpan dalam file dan bandingkan dengan password lama.
+                std::string decryptedPassword = dekripsi_text(cekPassword);
+                if (oldPassword == decryptedPassword) // Jika password lama yang dimasukkan cocok dengan password dalam file.
                 {
                     passwordBenar = true; // Atur variabel menjadi true karena password lama benar.
+                    std::cout << "(Password tidak boleh sama dengan username dan memiliki huruf yang sama)" << std::endl;
+                    std::cout << "(Password minimal 4 huruf dan maksimal 8 huruf dan harus berkarakter sama (angka,huruf))" << std::endl;
                     std::cout << "Password Baru : ";
                     std::cin >> newPassword; // Minta pengguna memasukkan password baru.
-                    tempFile << username << "," << newPassword << std::endl; // Tulis username dan password baru ke file temporary.
+
+                    // Enkripsi password baru sebelum disimpan ke file.
+                    std::string encryptedPassword = enkripsi_text(newPassword);
+
+                    tempFile << username << "," << encryptedPassword << std::endl; // Tulis username dan password baru ke file temporary.
                     std::cout << "Sandi berhasil diganti." << std::endl;
                 }
                 else // Jika password lama yang dimasukkan salah.
@@ -223,6 +237,7 @@ void gantiSandi() // Fungsi untuk mengganti sandi pengguna.
         std::cout << "Gagal mengakses data pengguna"; // Tampilkan pesan kesalahan.
     }
 }
+
 
 void pilihan() // Fungsi untuk menampilkan menu pilihan.
 {
