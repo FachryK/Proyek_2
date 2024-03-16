@@ -1,12 +1,14 @@
-#ifndef SAVE_DATA_SISWA_H
-#define SAVE_DATA_SISWA_H
+#ifndef _231511096_H
+#define _231511096_H
 
-#include <string> // Mengimpor header file <string> yang menyediakan kelas string dan fungsi-fungsi terkait yang akan digunakan dalam deklarasi fungsi
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+using namespace std;
 
-void login();
-bool login(const std::string& username, const std::string& password);
+string login();
 void registrasi();
-void gantiSandi();
-void pilihan();
+void lupaPassword();
 
-#endif // SAVE_DATA_SISWA_H
+#endif // _231511096_H
