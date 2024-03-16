@@ -1,286 +1,190 @@
-#include "231511096.h" // Include file header yang berisi deklarasi fungsi yang digunakan dalam program.
-#include <iostream> // Include library untuk operasi standar input-output.
-#include <fstream> // Include library untuk operasi file input-output.
-#include <sstream> // Include library untuk operasi string stream.
-#include <cstdio> // Include library untuk menggunakan fungsi remove() dan rename().
+#include "231511096.h"
 #include "../security/231511069.cpp"
+#include <iostream>
+#include <fstream>
 
-void login() // Fungsi untuk menampilkan layar selamat datang dan menu login.
+using namespace std;
+
+void login();
+void registrasi();
+void lupaPassword();
+void mainMenu() 
 {
-    system("cls"); // Menghapus semua teks sebelumnya dari layar/terminal.
-
-    std::cout << "============================================================" << std::endl;
-    std::cout << "|                   SELAMAT DATANG DI                      |" << std::endl;
-    std::cout << "|                APLIKASI SAVE DATA SISWA                  |" << std::endl;
-    std::cout << "============================================================" << std::endl;
-}
-
-bool login(const std::string& username, const std::string& password) // Fungsi untuk login dengan memeriksa username dan password.
-{
-    std::ifstream readFile("data-pengguna.txt"); // Buka file "data-pengguna.txt" untuk membaca data pengguna.
-
-    if (readFile.is_open()) // Jika file berhasil dibuka.
+    int c;
+    bool loggedIn = false; // Variable untuk menandai apakah pengguna telah login atau belum
+    
+    // Tampilkan pesan selamat datang hanya jika pengguna belum login
+    if (!loggedIn) 
     {
-        std::string data, cekUsername, cekPassword; // Deklarasikan variabel untuk menyimpan data username dan password dari file.
-        bool cariUsername = false; // Variabel untuk menunjukkan apakah username ditemukan.
-
-        while (getline(readFile, data) && !cariUsername) // Selama ada baris data yang dibaca dan belum menemukan username.
-        {
-            std::istringstream iss(data); // Buat objek stringstream untuk memproses baris teks.
-            getline(iss, cekUsername, ','); // Baca username dari baris teks yang dipisahkan oleh koma.
-            getline(iss, cekPassword, ','); // Baca password dari baris teks yang dipisahkan oleh koma.
-
-            if (username == cekUsername) // Jika username yang dimasukkan cocok dengan username dalam file.
-            {
-                cariUsername = true; // Set variabel menjadi true karena username ditemukan.
-
-                // Dekripsi password yang tersimpan dalam file dan bandingkan dengan password yang dimasukkan.
-                std::string decryptedPassword = dekripsi_text(cekPassword);
-                if (password == decryptedPassword) // Jika password yang dimasukkan cocok dengan password dalam file.
-                {
-                    login(); // Panggil fungsi login untuk menampilkan layar selamat datang.
-                    std::cout << "=============================================================" << std::endl;
-                    std::cout << "|                                                           |" << std::endl;
-                    std::cout << "|                      LOGIN BERHASIL!                      |" << std::endl;
-                    std::cout << "|                                                           |" << std::endl;
-                    std::cout << "=============================================================" << std::endl;
-                    return true; // Kembalikan nilai true karena login berhasil.
-                }
-                else // Jika password yang dimasukkan tidak cocok dengan password dalam file.
-                {
-                    std::cout << "============================================================" << std::endl;
-                    std::cout << "|                                                           |" << std::endl;
-                    std::cout << "|                      PASSWORD SALAH!                      |" << std::endl;
-                    std::cout << "|                                                           |" << std::endl;
-                    std::cout << "============================================================" << std::endl;
-                    return false; // Kembalikan nilai false karena password salah.
-                }
-            }
-        }
-
-        if (!cariUsername) // Jika username tidak ditemukan dalam file.
-        {
-            login(); // Panggil fungsi login untuk menampilkan layar selamat datang.
-            std::cout << "=============================================================" << std::endl;
-            std::cout << "|                                                           |" << std::endl;
-            std::cout << "|                  USERNAME TIDAK DITEMUKAN!                |" << std::endl;
-            std::cout << "|                                                           |" << std::endl;
-            std::cout << "=============================================================" << std::endl;
-            return false; // Kembalikan nilai false karena username tidak ditemukan.
-        }
-
-        readFile.close(); // Tutup file setelah selesai membacanya.
-    }
-    else // Jika gagal membuka file.
-    {
-        std::cout << "Gagal mengakses data pengguna"; // Tampilkan pesan kesalahan.
+        cout << "\t============================================================\n";
+        cout << "\t|                   SELAMAT DATANG DI                      |\n";
+        cout << "\t|                APLIKASI SAVE DATA SISWA                  |\n";
+        cout << "\t============================================================\n";
     }
 
-    return false; // Kembalikan nilai false jika tidak terjadi login.
-}
+    cout << "\t___________________________ MENU ___________________________\n";
+    cout << "\t Pilihan:" << endl;
+    cout << "\t 1. Login" << endl;
+    cout << "\t 2. Registrasi" << endl;
+    cout << "\t 3. Lupa Password" << endl;
+    cout << "\t Pilih opsi: ";
+    cin >> c;
+    cout << endl;
 
-
-void registrasi() // Fungsi untuk melakukan registrasi akun baru.
-{
-    login(); // Tampilkan layar selamat datang dan menu login.
-
-    std::string username, password, encryptedPassword; // Deklarasikan variabel untuk menyimpan username dan password baru.
-
-    std::cout << "Registrasi Akun Baru" << std::endl;
-    std::cout << "(Username harus tanpa kapital dan spasi)" << std::endl;
-    std::cout << "Username : ";
-    std::cin >> username; // Minta pengguna memasukkan username baru.
-    std::cout << "(Password tidak boleh sama dengan username dan memiliki huruf yang sama)" << std::endl;
-    std::cout << "(Password minimal 4 huruf dan maksimal 8 huruf dan harus berkarakter sama (angka,huruf))" << std::endl;
-    std::cout << "Password : ";
-    std::cin >> password; // Minta pengguna memasukkan password baru.
-    encryptedPassword = enkripsi_text(password);
-
-    std::ifstream readFile("data-pengguna.txt"); // Buka file "data-pengguna.txt" untuk membaca data pengguna.
-
-    if (readFile.is_open()) // Jika file berhasil dibuka.
+    switch (c) 
     {
-        std::string data, cekUsername; // Deklarasikan variabel untuk menyimpan data username dari file.
-        bool usernameSama = false; // Variabel untuk menunjukkan apakah username sudah ada.
+        case 1:
+            login();
+            loggedIn = true; // Setelah login berhasil, tandai pengguna sebagai sudah login
+            break;
 
-        while (getline(readFile, data)) // Selama ada baris data yang dibaca.
-        {
-            std::istringstream iss(data); // Buat objek stringstream untuk memproses baris teks.
-            getline(iss, cekUsername, ','); // Baca username dari baris teks yang dipisahkan oleh koma.
+        case 2:
+            registrasi();
+            break;
 
-            if (username == cekUsername) // Jika username yang dimasukkan sudah ada dalam file.
-            {
-                usernameSama = true; // Set variabel menjadi true karena username sudah ada.
-                break; // Keluar dari loop karena sudah tidak perlu mencari lagi.
-            }
-        }
+        case 3:
+            lupaPassword();
+            break;
 
-        if (!usernameSama) // Jika username belum ada dalam file.
-        {
-            std::ofstream writeFile("data-pengguna.txt", std::ios::app); // Buka file "data-pengguna.txt" untuk menulis data pengguna baru.
-
-            if (writeFile.is_open()) // Jika file berhasil dibuka.
-            {
-                writeFile << username << "," << encryptedPassword << std::endl; // Tulis username dan password ke file.
-                login(); // Tampilkan layar selamat datang dan menu login.
-                std::cout << "=============================================================" << std::endl;
-                std::cout << "|                                                            |" << std::endl;
-                std::cout << "|                   REGISTRASI BERHASIL!                     |" << std::endl;
-                std::cout << "|                                                            |" << std::endl;
-                std::cout << "=============================================================" << std::endl;
-                writeFile.close(); // Tutup file setelah selesai menulis.
-            }
-            else // Jika gagal membuka file.
-            {
-                std::cout << "Gagal mengakses data pengguna"; // Tampilkan pesan kesalahan.
-            }
-        }
-        else // Jika username sudah ada dalam file.
-        {
-            std::cout << "Username sudah digunakan. Registrasi gagal." << std::endl; // Tampilkan pesan bahwa username sudah digunakan.
-        }
-
-        readFile.close(); // Tutup file setelah selesai membacanya.
-    }
-    else // Jika gagal membuka file.
-    {
-        std::cout << "Gagal mengakses data pengguna"; // Tampilkan pesan kesalahan.
+        default:
+            system("cls");
+            cout << "\t ----------Silakan pilih dari opsi yang diberikan di atas----------\n" << endl;
+            mainMenu();
     }
 }
 
-void gantiSandi() // Fungsi untuk mengganti sandi pengguna.
+int main() 
 {
-    login(); // Tampilkan layar selamat datang dan menu login.
+    mainMenu();
+    return 0;
+}
 
-    std::string username, oldPassword, newPassword; // Deklarasikan variabel untuk menyimpan username, password lama, dan password baru.
+void login() 
+{
+    int count = 0;
+    string userId, password, id, pass;
+    system("cls");
+    cout << "\t Username : ";
+    cin >> userId;
+    cout << "\t Password : ";
+    cin >> password;
 
-    std::cout << "Ganti Sandi" << std::endl;
-    std::cout << "Username : ";
-    std::cin >> username; // Minta pengguna memasukkan username.
-    std::cout << "Password Lama : ";
-    std::cin >> oldPassword; // Minta pengguna memasukkan password lama.
+    ifstream input("record.txt");
 
-    std::ifstream readFile("data-pengguna.txt"); // Buka file "data-pengguna.txt" dalam mode baca.
-    std::ofstream tempFile("temp.txt"); // Buka file temporary untuk menulis data pengguna baru.
-
-    if (readFile.is_open() && tempFile.is_open()) // Jika kedua file berhasil dibuka.
+    if (input.is_open()) 
     {
-        std::string data, cekUsername, cekPassword; // Deklarasikan variabel untuk menyimpan data yang dibaca dari file.
-        bool cariUsername = false; // Variabel untuk menunjukkan apakah username ditemukan.
-        bool passwordBenar = false; // Variabel untuk menunjukkan apakah password lama benar.
-
-        while (getline(readFile, data)) // Baca setiap baris data dari file.
+        while (getline(input, id, ',') && getline(input, pass)) 
         {
-            std::istringstream iss(data); // Buat objek stringstream untuk memproses baris teks.
-            getline(iss, cekUsername, ','); // Baca username dari baris teks.
-            getline(iss, cekPassword, ','); // Baca password dari baris teks.
-
-            if (username == cekUsername) // Jika username yang dimasukkan cocok dengan username dalam file.
+            string decryptedPass = dekripsi_text(pass);
+            if (id == userId && decryptedPass == password) 
             {
-                cariUsername = true; // Atur variabel menjadi true karena username ditemukan.
+                count = 1;
+                system("cls");
+                break;
+            }
+        }
+        input.close();
+    }
 
-                // Dekripsi password yang tersimpan dalam file dan bandingkan dengan password lama.
-                std::string decryptedPassword = dekripsi_text(cekPassword);
-                if (oldPassword == decryptedPassword) // Jika password lama yang dimasukkan cocok dengan password dalam file.
+    if (count == 1) 
+    {
+        cout << userId << "\n----------Login berhasil!----------\n";
+    } 
+    else 
+    {
+        cout << "----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
+    }
+}
+
+void registrasi() 
+{
+    string ruserId, rpassword, encryptedpass;
+    system("cls");
+    cout << "\t Username : ";
+    cin >> ruserId;
+    cout << "\t Password : ";
+    cin >> rpassword;
+    encryptedpass = enkripsi_text(rpassword); // Anda perlu mengenkripsi password sebelum menyimpannya
+
+    ifstream checkFile("record.txt");
+    string id;
+    bool usernameExists = false;
+
+    // Memeriksa apakah username sudah ada dalam file
+    while (getline(checkFile, id, ',')) 
+    {
+        if (id == ruserId) 
+        {
+            usernameExists = true;
+            break;
+        }
+    }
+    checkFile.close();
+
+    // Jika username sudah ada, tampilkan pesan kesalahan
+    if (usernameExists) 
+    {
+        cout << "\n\t\t ----------Username sudah digunakan. Registrasi gagal----------\n";
+    } 
+    else 
+    {
+        // Jika username belum ada, lakukan registrasi
+        ofstream f1("record.txt", ios::app);
+        f1 << ruserId << ',' << encryptedpass << endl;
+        f1.close(); // Tutup file setelah selesai menulis
+        system("cls");
+        cout << "\n\t\t ----------Registrasi berhasil----------\n";
+    }
+}
+
+void lupaPassword() 
+{
+    int option;
+    system("cls");
+    cout << "\t\t\t Apakah anda lupa password? Jangan khawatir \n";
+    cout << "Ketik 1 untuk mencari dengan username" << endl;
+    cout << "Ketik 2 untuk kembali menu utama " << endl;
+    cout << "\t Pilihan anda : ";
+    cin >> option;
+    switch (option) 
+    {
+        case 1: 
+        {
+            int count = 0;
+            string suserId, sId, encryptedPass;
+            cout << "\t Masukkan Username anda : ";
+            cin >> suserId;
+            
+            string decryptedPass; // Deklarasi variabel decryptedPass di luar loop
+            
+            ifstream f2("record.txt");
+            while (getline(f2, sId, ',') && getline(f2, encryptedPass)) 
+            {
+                decryptedPass = dekripsi_text(encryptedPass); // Dekripsi password di sini
+                if (sId == suserId) 
                 {
-                    passwordBenar = true; // Atur variabel menjadi true karena password lama benar.
-                    std::cout << "(Password tidak boleh sama dengan username dan memiliki huruf yang sama)" << std::endl;
-                    std::cout << "(Password minimal 4 huruf dan maksimal 8 huruf dan harus berkarakter sama (angka,huruf))" << std::endl;
-                    std::cout << "Password Baru : ";
-                    std::cin >> newPassword; // Minta pengguna memasukkan password baru.
-
-                    // Enkripsi password baru sebelum disimpan ke file.
-                    std::string encryptedPassword = enkripsi_text(newPassword);
-
-                    tempFile << username << "," << encryptedPassword << std::endl; // Tulis username dan password baru ke file temporary.
-                    std::cout << "Sandi berhasil diganti." << std::endl;
-                }
-                else // Jika password lama yang dimasukkan salah.
-                {
-                    // Salin data pengguna tanpa mengubah password jika password lama salah.
-                    tempFile << data << std::endl;
+                    count = 1;
+                    break;
                 }
             }
-            else // Jika username tidak cocok.
+            f2.close();
+            if (count == 1) 
             {
-                // Salin data pengguna yang tidak sesuai username.
-                tempFile << data << std::endl;
+                cout << "\n\t----------Akun anda ditemukan!----------\n";
+                cout << "\tPassword akun anda :" << decryptedPass << endl;
+            } 
+            else 
+            {
+                cout << "\n\t ----------Maaf akun anda tidak ditemukan---------- \n";
             }
+            break;
         }
 
-        // Jika username tidak ditemukan, tampilkan pesan.
-        if (!cariUsername)
-        {
-            std::cout << "Username tidak ditemukan. Gagal mengganti sandi." << std::endl;
-        }
-        else if (!passwordBenar) // Jika password lama salah, tampilkan pesan.
-        {
-            std::cout << "Password lama salah. Gagal mengganti sandi." << std::endl;
-        }
+        case 2:
+            break;
 
-        readFile.close(); // Tutup file baca.
-        tempFile.close(); // Tutup file temporary.
-
-        // Ganti nama file temporary menjadi file asli jika password benar.
-        if (passwordBenar)
-        {
-            remove("data-pengguna.txt"); // Hapus file asli.
-            rename("temp.txt", "data-pengguna.txt"); // Ganti nama file temporary menjadi file asli.
-        }
-        else // Hapus file temporary jika password salah.
-        {
-            remove("temp.txt");
-        }
+        default:
+            cout << "\t----------Pilihan tidak sesuai, silahkan coba lagi----------";
+            lupaPassword();
     }
-    else // Jika gagal membuka salah satu atau kedua file.
-    {
-        std::cout << "Gagal mengakses data pengguna"; // Tampilkan pesan kesalahan.
-    }
-}
-
-
-void pilihan() // Fungsi untuk menampilkan menu pilihan.
-{
-    login(); // Tampilkan layar selamat datang dan menu login.
-
-    int choice; // Deklarasikan variabel untuk menyimpan pilihan pengguna.
-
-    std::cout << "Pilihan:" << std::endl;
-    std::cout << "1. Login" << std::endl;
-    std::cout << "2. Registrasi" << std::endl;
-    std::cout << "3. Ganti Sandi" << std::endl;
-    std::cout << "Pilih opsi: ";
-    std::cin >> choice; // Minta pengguna memilih opsi.
-
-    switch (choice) // Periksa pilihan pengguna.
-    {
-    case 1: // Jika pengguna memilih untuk login.
-    {
-        std::string username, password; // Deklarasikan variabel untuk menyimpan username dan password.
-        login(); // Tampilkan layar selamat datang dan menu login.
-        std::cout << "Login" << std::endl;
-        std::cout << "Username : ";
-        std::cin >> username; // Minta pengguna memasukkan username.
-        std::cout << "Password : ";
-        std::cin >> password; // Minta pengguna memasukkan password.
-        login(username, password); // Panggil fungsi login dengan username dan password yang dimasukkan.
-        break;
-    }
-    case 2: // Jika pengguna memilih untuk registrasi.
-        registrasi(); // Panggil fungsi registrasi.
-        break;
-    case 3: // Jika pengguna memilih untuk mengganti sandi.
-        gantiSandi(); // Panggil fungsi untuk mengganti sandi.
-        break;
-    default: // Jika pengguna memilih opsi yang tidak valid.
-        login(); // Tampilkan layar selamat datang dan menu login.
-        std::cout << "Pilihan tidak valid." << std::endl;
-        break;
-    }
-}
-
-int main() // Fungsi utama program.
-{
-    pilihan(); // Panggil fungsi untuk menampilkan menu pilihan.
-    return 0; // Kembalikan nilai 0 sebagai tanda program berakhir dengan sukses.
 }
