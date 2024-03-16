@@ -1,25 +1,21 @@
-#include "hillcipher_enkripsi.hpp"
-#include "hillcipher_dekripsi.h"
-#include <stdlib.h>
-#include <stdio.h>
+#include "231511069.h"
 #include <iostream>
-using namespace std;
-int main()
-{
-    
-    char *text = NULL;
-    size_t text_length = 0;
 
-    //printf("Masukkan Text ");
-    getline(&text,&text_length,stdin);
-    text[strcspn(text, "\n")] =  '\0';
+int main() {
+    std::string encrypted1 = enkripsi_text("2323");
+    std::string encrypted2 = enkripsi_text("12345");
 
-    //std::string encryptedString = enkripsi_text("al");
-    //std::cout << "Encrypted String: " << encryptedString << std::endl;
-    enkripsi_text(text);
-    dekripsi_text(text);
-    //free(text);
+    std::cout << "Encrypted 1: " << encrypted1 << std::endl;
+    std::cout << "Encrypted 2: " << encrypted2 << std::endl;
+
+    // Dekripsi teks
+    std::cout << "Dekripsi 1: ";
+    dekripsi_text(encrypted1);
+    std::cout << std::endl;
+
+    std::cout << "Dekripsi 2: ";
+    dekripsi_text(encrypted2);
+    std::cout << std::endl;
 
     return 0;
-
 }
