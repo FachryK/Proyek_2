@@ -37,7 +37,7 @@ int main()
     std::string bebas;
     // Buat objek student dan inisialisasi array students
     
-    cout << "Masukkan Nama yang ciari : ";
+    cout << "Masukkan Nama yang dicari : ";
     cin >> bebas;
 
 
