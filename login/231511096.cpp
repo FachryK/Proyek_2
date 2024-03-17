@@ -11,7 +11,8 @@ string login()
     int count = 0;
     string userId, password, id, pass, tes;
     system("cls");
-    cout << "\n\n\t Username : ";
+    cout << "\n\n\t----------Silahkan Masukkan Username dan Password Anda----------\n";
+    cout << "\t Username : ";
     cin >> userId;
     cout << "\t Password : ";
     cin >> password;
@@ -36,13 +37,13 @@ string login()
     if (count == 1) 
     {
         string user;
-        cout <<"\n"<< userId << "\n\n----------Login berhasil!----------\n\n";
+        cout <<"\n"<< userId << "\n----------Login berhasil!----------\n\n";
         user = userId;
         return user;
     } 
     else 
     {
-        cout << "\n\n----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
+        cout << "\n----------Login eror! Cek Username dan Password yang anda masukkan----------\n\n";
         tes = " ";
         return tes;
     }
@@ -52,7 +53,8 @@ void registrasi()
 {
     string ruserId, rpassword, encryptedpass;
     system("cls");
-    cout << "\n\n\t Username : ";
+    cout << "\n\n\t----------Silahkan Buat Akun Anda----------\n";
+    cout << "\t Username : ";
     cin >> ruserId;
     cout << "\t Password : ";
     cin >> rpassword;
@@ -82,7 +84,7 @@ void registrasi()
     // Jika username sudah ada, tampilkan pesan kesalahan
     if (usernameExists) 
     {
-        cout << "\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n";
+        cout << "\n\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n\n";
     } 
     else 
     {
@@ -90,9 +92,8 @@ void registrasi()
         ofstream f1("record.txt", ios::app);
         f1 << ruserId << ',' << encryptedpass << endl;
         f1.close(); // Tutup file setelah selesai menulis
-        system("cls");
         ofstream outputFile(ruserId + ".txt", std::ios::app); // Bikin file sesuai dengan nama yang di input
-        cout << "\t\t ----------Registrasi berhasil----------\n";
+        cout << "\n\t\t ----------Registrasi berhasil----------\n\n";
     }
 }
 
@@ -129,12 +130,12 @@ void lupaPassword()
             f2.close();
             if (count == 1) 
             {
-                cout << "\t----------Akun anda ditemukan!----------\n";
+                cout << "\t\n----------Akun anda ditemukan!----------\n";
                 cout << "\tPassword akun anda :" << decryptedPass << endl;
             } 
             else 
             {
-                cout << "\t----------Maaf akun anda tidak ditemukan----------\n\n";
+                cout << "\t\n----------Maaf akun anda tidak ditemukan----------\n\n";
             }
             break;
         }      

@@ -16,7 +16,7 @@ int main()
         bool loggedIn = false;
         if (!loggedIn) 
         {
-            cout << "\t============================================================\n";
+            cout << "\n\t============================================================\n";
             cout << "\t|                   SELAMAT DATANG DI                      |\n";
             cout << "\t|                APLIKASI SAVE DATA SISWA                  |\n";
             cout << "\t============================================================\n";
@@ -55,7 +55,7 @@ int main()
                 break;
             default:
                 system("cls");
-                cout << "\t\n\n----------Terimakasih----------\n" << endl;
+                cout << "\n\n\t\t\t\t----------Terimakasih----------\n" << endl;
         }
     } while (c != 4);
 }
