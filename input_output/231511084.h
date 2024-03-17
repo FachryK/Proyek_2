@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 using namespace std;
+#ifndef _231511084_H
+#define _231511084_H
 
 struct Siswa{
     string NAMA;
@@ -21,3 +23,5 @@ struct Siswa{
 void inputdata(const string &user); 
 void outputdata(const string &user);
 void pilihan(const string &user); 
+
+#endif //231511084.h

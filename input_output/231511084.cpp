@@ -6,8 +6,7 @@ using namespace std;
 #include "231511084.h"
 #include "../security/231511069.h"
 #include "../login/231511096.h"
-
-    Siswa siswa;
+#include "../search_filter/231511075.h"
 
     void inputdata(const string &user) 
     {
@@ -68,87 +67,96 @@ using namespace std;
         }
     }
 
-    void outputdata(const string &user) {
-    ifstream inputFile(user + ".txt");
-    Siswa siswa;
+    void outputdata(const string &user) 
+    {
+        ifstream inputFile(user + ".txt");
+        Siswa siswa;
 
-    if (inputFile.is_open()) {
-        cout << "-----------------------------------------------\n";
-        cout << "                Data Siswa:\n";
-        cout << "-----------------------------------------------\n";
+        if (inputFile.is_open()) 
+        {
+            cout << "\t-----------------------------------------------\n";
+            cout << "\t                 Data Siswa:\n";
+            cout << "\t-----------------------------------------------\n";
 
-        string line, nik_dekripsi, kk_dekripsi, alamat_dekripsi;
-        int count = 0; // Variabel untuk menghitung jumlah baris
+            string line, nik_dekripsi, kk_dekripsi, alamat_dekripsi;
+            int count = 0; // Variabel untuk menghitung jumlah baris
 
-        // Menghitung jumlah baris dalam file
-        while (getline(inputFile, line)) {
-            count++;
+            // Menghitung jumlah baris dalam file
+            while (getline(inputFile, line)) 
+            {
+                count++;
+            }
+
+            // Mengembalikan posisi file ke awal
+            inputFile.clear();
+            inputFile.seekg(0, ios::beg);
+
+            if (count == 0)
+            {
+                cout << "\t-----------------------------------------------\n";
+                cout << "\t          Tidak Ada Data yang Diinput\n";
+                cout << "\t-----------------------------------------------\n";
+            }
+            
+
+            // Loop untuk setiap baris dalam file
+            for (int i = 1; i <= count; i++) 
+            {
+                getline(inputFile, line);
+                stringstream ss(line);
+
+                getline(ss, siswa.NIS, ',');
+                getline(ss, siswa.NISN, ',');
+                getline(ss, siswa.NAMA, ',');
+                getline(ss, siswa.JENIS_KELAMIN, ',');
+                getline(ss, siswa.TTL, ',');
+                getline(ss, siswa.NIK, ',');
+                getline(ss, siswa.No_KK, ',');
+                getline(ss, siswa.AGAMA, ',');
+                getline(ss, siswa.ALAMAT_RUMAH, ',');
+                getline(ss, siswa.No_HP, ',');
+                getline(ss, siswa.Email, ',');
+
+                nik_dekripsi = dekripsi_text(siswa.NIK);
+                kk_dekripsi = dekripsi_text(siswa.No_KK);
+                alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
+
+                // Menampilkan data siswa dengan nomor baris
+                cout << "\t-----------------------------------------------\n";
+                cout << "\t                 Siswa ke " << i << endl;
+                cout << "\t-----------------------------------------------\n";
+                cout << "NIS: " << siswa.NIS << endl;
+                cout << "NISN: " << siswa.NISN << endl;
+                cout << "Nama: " << siswa.NAMA << endl;
+                cout << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << endl;
+                cout << "TTL: " << siswa.TTL << endl;
+                cout << "NIK: " << nik_dekripsi << endl;
+                cout << "No.KK: " << kk_dekripsi << endl;
+                cout << "Agama: " << siswa.AGAMA << endl;
+                cout << "Alamat Rumah: " << alamat_dekripsi << endl;
+                cout << "No.HP: " << siswa.No_HP << endl;
+                cout << "Email: " << siswa.Email << endl;
+                cout << endl;
+            }
+
+            inputFile.close();
+        } 
+        else 
+        {
+            cerr << "Filenya tidak bisa dibuka.\n";
         }
-
-        // Mengembalikan posisi file ke awal
-        inputFile.clear();
-        inputFile.seekg(0, ios::beg);
-
-        // Loop untuk setiap baris dalam file
-        for (int i = 1; i <= count; i++) {
-            getline(inputFile, line);
-            stringstream ss(line);
-
-            // Membaca data siswa dari setiap baris
-            getline(ss, siswa.NIS, ',');
-            getline(ss, siswa.NISN, ',');
-            getline(ss, siswa.NAMA, ',');
-            getline(ss, siswa.JENIS_KELAMIN, ',');
-            getline(ss, siswa.TTL, ',');
-            getline(ss, siswa.NIK, ',');
-            getline(ss, siswa.No_KK, ',');
-            getline(ss, siswa.AGAMA, ',');
-            getline(ss, siswa.ALAMAT_RUMAH, ',');
-            getline(ss, siswa.No_HP, ',');
-            getline(ss, siswa.Email, ',');
-
-            nik_dekripsi = dekripsi_text(siswa.NIK);
-            kk_dekripsi = dekripsi_text(siswa.No_KK);
-            alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
-
-            // Menampilkan data siswa dengan nomor baris
-            cout <<"---------------------------------------" << endl;
-            cout << "              Siswa ke " << i << endl;
-            cout <<"---------------------------------------" << endl;
-            cout << "NIS: " << siswa.NIS << endl;
-            cout << "NISN: " << siswa.NISN << endl;
-            cout << "Nama: " << siswa.NAMA << endl;
-            cout << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << endl;
-            cout << "TTL: " << siswa.TTL << endl;
-            cout << "NIK: " << nik_dekripsi << endl;
-            cout << "No.KK: " << kk_dekripsi << endl;
-            cout << "Agama: " << siswa.AGAMA << endl;
-            cout << "Alamat Rumah: " << alamat_dekripsi << endl;
-            cout << "No.HP: " << siswa.No_HP << endl;
-            cout << "Email: " << siswa.Email << endl;
-            cout << endl;
-        }
-
-        inputFile.close();
-    } else {
-        cerr << "Filenya tidak bisa dibuka.\n";
-    }
-}
-
-
-
-
-
-
+    }   
 
     void pilihan(const string &user)
     {
         int choice;
+        string nama;
         do
         {
             cout << "\t(1) Memasukkan Data Siswa \n";
             cout << "\t(2) Menampilkan Data Siswa \n";
-            cout << "\t(0) Keluar \n";
+            cout << "\t(3) Pencarian Berdasarkan Nama \n";
+            cout << "\t(4) Keluar \n";
             cout << "\tOpsi      : ";
             cin >> choice;
             switch (choice)
@@ -159,13 +167,21 @@ using namespace std;
             case 2:
                 outputdata(user);
                 break;
-            case 0:
+            case 3:
+                cout << "Masukkan Nama Siswa yang ingin dicari: ";
+                cin.ignore();
+                getline(cin,nama);
+                searchByName(user,nama);
+                break;
+            case 4:
                 system("cls");
                 break;
             default:
-                cout << "\tPilihan tidak valid";
+                cout << "\t----------------------\n";
+                cout << "\t Pilihan tidak valid\n";
+                cout << "\t----------------------\n";
                 break;
             }
-        } while (choice != 0);
+        } while (choice != 4);
         
     }
