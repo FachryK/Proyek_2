@@ -130,7 +130,7 @@ void lupaPassword()
             if (count == 1) 
             {
                 cout << "\n\t----------Akun anda ditemukan!----------\n";
-                cout << "\tPassword akun anda :" << decryptedPass << endl;
+                cout << "\t Password akun anda :" << decryptedPass << endl;
             } 
             else 
             {
