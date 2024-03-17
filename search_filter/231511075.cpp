@@ -1,87 +1,83 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
 #include <string>
-#include "../input_output/231511084.h"
+#include <algorithm> // untuk transform()
 
-class Student
+// Struktur data untuk menyimpan informasi siswa
+struct Siswa
 {
-private:
-    std::string name;
-
-public:
-    Student(const std::string &name) : name(name) {}
-
-    std::string getName() const
-    {
-        return name;
-    }
+    std::string NAMA;
+    // Tambahkan atribut lain jika diperlukan
 };
 
-// Fungsi pencarian mahasiswa berdasarkan nama
-Student searchStudentByName(const Student *students, int size, const std::string &name)
+// Fungsi untuk membaca data siswa dari file teks
+std::vector<Siswa> readSiswaFromFile(const std::string &filename)
 {
-    for (int i = 0; i < size; ++i)
+    std::ifstream file(filename);
+    std::vector<Siswa> siswaList;
+
+    if (file.is_open())
     {
-        if (students[i].getName() == name)
+        std::string line;
+        while (std::getline(file, line))
         {
-            return students[i];
+            // Menghapus karakter yang tidak diinginkan (jika ada)
+            line.erase(std::remove(line.begin(), line.end(), '\r'), line.end()); // Menghapus karakter '\r' jika ada
+            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end()); // Menghapus karakter '\n' jika ada
+
+            // Transformasi nama menjadi lowercase (menghindari masalah perbedaan huruf besar/kecil)
+            std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+
+            Siswa siswa;
+            siswa.NAMA = line;
+            siswaList.push_back(siswa);
+        }
+        file.close();
+    }
+
+    return siswaList;
+}
+
+// Fungsi pencarian siswa berdasarkan nama
+Siswa searchSiswaByName(const std::vector<Siswa> &siswaList, const std::string &name)
+{
+    std::string lowercaseName = name;
+    // Mengubah input nama menjadi lowercase untuk membandingkan dengan nama dalam file
+    std::transform(lowercaseName.begin(), lowercaseName.end(), lowercaseName.begin(), ::tolower);
+
+    for (const auto &siswa : siswaList)
+    {
+        // Mengubah nama dalam file menjadi lowercase dan membandingkannya dengan nama yang diinputkan
+        if (siswa.NAMA == lowercaseName)
+        {
+            return siswa;
         }
     }
-    // Jika mahasiswa tidak ditemukan, kembalikan objek dengan nama kosong
-    return Student("");
+    // Jika siswa tidak ditemukan, kembalikan siswa dengan nama kosong
+    return Siswa{"", /* tambahkan atribut lain jika diperlukan */};
 }
 
 int main()
 {
-    
-    Siswa siswa;
-    std::string bebas;
-    // Buat objek student dan inisialisasi array students
-    
-    cout << "Masukkan Nama yang dicari : ";
-    cin >> bebas;
+    // Baca data siswa dari file teks
+    std::vector<Siswa> siswaList = readSiswaFromFile("siswa.txt");
 
+    std::string searchName;
+    std::cout << "Masukkan Nama yang dicari : ";
+    std::getline(std::cin, searchName); // Menggunakan std::getline untuk membaca spasi pada input
 
-    const int studentCount = 1; // Menggunakan array dengan satu elemen saja
-    Student students[studentCount] = {Student(siswa.NAMA)};
-    // Pencarian mahasiswa berdasarkan NAMA
-    std::string searchName = siswa.NAMA;
+    // Cari siswa berdasarkan nama
+    Siswa result = searchSiswaByName(siswaList, searchName);
 
-    std::ifstream readFile("siswa.txt");
-    if (readFile.is_open())
+    if (result.NAMA != "")
     {
-        if (bebas == siswa.NAMA)
-        {
-            std::cout << "Mahasiswa dengan NAMA " << siswa.NAMA << " ditemukan." << std::endl;
-        }
-        else
-        {
-            std::cout << "Mahasiswa dengan NAMA " << siswa.NAMA << " tidak ditemukan." << std::endl;
-        }
-        
-        
-        Student result = searchStudentByName(students, studentCount, searchName);
-
-        // if (result.getName() != "")
-        // {
-            
-        // }
-        // else
-        // {
-            
-        // }
-        // readFile.close();
+        std::cout << "Mahasiswa dengan nama " << result.NAMA << " ditemukan." << std::endl;
     }
-
-    // Student result = searchStudentByName(students, studentCount, searchName);
-
-    // if (result.getName() != "")
-    // {
-    //     std::cout << "Mahasiswa dengan nama " << siswa.Nama << " ditemukan." << std::endl;
-    // }
-    // else
-    // {
-    //     std::cout << "Mahasiswa dengan nama " << searchName << " tidak ditemukan." << std::endl;
-    // }
+    else
+    {
+        std::cout << "Mahasiswa dengan nama " << searchName << " tidak ditemukan." << std::endl;
+    }
 
     return 0;
 }
