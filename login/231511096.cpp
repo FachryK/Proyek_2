@@ -11,7 +11,7 @@ string login()
     int count = 0;
     string userId, password, id, pass, tes;
     system("cls");
-    cout << "\t Username : ";
+    cout << "\n\n\t Username : ";
     cin >> userId;
     cout << "\t Password : ";
     cin >> password;
@@ -36,13 +36,13 @@ string login()
     if (count == 1) 
     {
         string user;
-        cout << userId << "\n\n----------Login berhasil!----------\n\n";
+        cout <<"\n"<< userId << "\n\n----------Login berhasil!----------\n\n";
         user = userId;
         return user;
     } 
     else 
     {
-        cout << "----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
+        cout << "\n\n----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
         tes = " ";
         return tes;
     }
@@ -52,7 +52,7 @@ void registrasi()
 {
     string ruserId, rpassword, encryptedpass;
     system("cls");
-    cout << "\t Username : ";
+    cout << "\n\n\t Username : ";
     cin >> ruserId;
     cout << "\t Password : ";
     cin >> rpassword;
@@ -82,7 +82,7 @@ void registrasi()
     // Jika username sudah ada, tampilkan pesan kesalahan
     if (usernameExists) 
     {
-        cout << "\n\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n";
+        cout << "\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n";
     } 
     else 
     {
@@ -92,7 +92,7 @@ void registrasi()
         f1.close(); // Tutup file setelah selesai menulis
         system("cls");
         ofstream outputFile(ruserId + ".txt", std::ios::app); // Bikin file sesuai dengan nama yang di input
-        cout << "\n\t\t ----------Registrasi berhasil----------\n";
+        cout << "\t\t ----------Registrasi berhasil----------\n";
     }
 }
 
@@ -129,12 +129,12 @@ void lupaPassword()
             f2.close();
             if (count == 1) 
             {
-                cout << "\n\t----------Akun anda ditemukan!----------\n";
-                cout << "\t Password akun anda :" << decryptedPass << endl;
+                cout << "\t----------Akun anda ditemukan!----------\n";
+                cout << "\tPassword akun anda :" << decryptedPass << endl;
             } 
             else 
             {
-                cout << "\n\t ----------Maaf akun anda tidak ditemukan---------- \n";
+                cout << "\t----------Maaf akun anda tidak ditemukan----------\n\n";
             }
             break;
         }      
@@ -143,7 +143,7 @@ void lupaPassword()
             break;
 
         default:
-            cout << "\t----------Pilihan tidak sesuai, silahkan klik enter untuk coba lagi----------\n";
+            cout << "\t----------Pilihan tidak sesuai, silahkan klik enter untuk coba lagi----------\n\n";
             cin.ignore();
             cin.get();
             system ("cls");

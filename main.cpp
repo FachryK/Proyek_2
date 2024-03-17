@@ -55,7 +55,7 @@ int main()
                 break;
             default:
                 system("cls");
-                cout << "\t ----------Terimakasih----------\n" << endl;
+                cout << "\t\n\n----------Terimakasih----------\n" << endl;
         }
     } while (c != 4);
 }

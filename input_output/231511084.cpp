@@ -12,7 +12,7 @@ using namespace std;
     {
         Siswa siswa;
 
-        cout << "Masukkan NIS: ";
+        cout << "\nMasukkan NIS: ";
         cin >> siswa.NIS;
         cin.ignore(); // Membersihkan karakter newline dari buffer masukan
         cout << "Masukkan NISN: ";
@@ -74,7 +74,7 @@ using namespace std;
 
         if (inputFile.is_open()) 
         {
-            cout << "\t-----------------------------------------------\n";
+            cout << "\n\t-----------------------------------------------\n";
             cout << "\t                 Data Siswa:\n";
             cout << "\t-----------------------------------------------\n";
 
@@ -125,17 +125,17 @@ using namespace std;
                 cout << "\t-----------------------------------------------\n";
                 cout << "\t                 Siswa ke " << i << endl;
                 cout << "\t-----------------------------------------------\n";
-                cout << "NIS: " << siswa.NIS << endl;
-                cout << "NISN: " << siswa.NISN << endl;
-                cout << "Nama: " << siswa.NAMA << endl;
-                cout << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << endl;
-                cout << "TTL: " << siswa.TTL << endl;
-                cout << "NIK: " << nik_dekripsi << endl;
-                cout << "No.KK: " << kk_dekripsi << endl;
-                cout << "Agama: " << siswa.AGAMA << endl;
-                cout << "Alamat Rumah: " << alamat_dekripsi << endl;
-                cout << "No.HP: " << siswa.No_HP << endl;
-                cout << "Email: " << siswa.Email << endl;
+                cout << "\tNIS: " << siswa.NIS << endl;
+                cout << "\tNISN: " << siswa.NISN << endl;
+                cout << "\tNama: " << siswa.NAMA << endl;
+                cout << "\tJenis Kelamin: " << siswa.JENIS_KELAMIN << endl;
+                cout << "\tTTL: " << siswa.TTL << endl;
+                cout << "\tNIK: " << nik_dekripsi << endl;
+                cout << "\tNo.KK: " << kk_dekripsi << endl;
+                cout << "\tAgama: " << siswa.AGAMA << endl;
+                cout << "\tAlamat Rumah: " << alamat_dekripsi << endl;
+                cout << "\tNo.HP: " << siswa.No_HP << endl;
+                cout << "\tEmail: " << siswa.Email << endl;
                 cout << endl;
             }
 
