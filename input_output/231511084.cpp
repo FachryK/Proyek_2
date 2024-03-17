@@ -11,50 +11,52 @@ using namespace std;
 
     void inputdata(const string &user) 
     {
+        Siswa siswa;
+
         cout << "Masukkan NIS: ";
         cin >> siswa.NIS;
+        cin.ignore(); // Membersihkan karakter newline dari buffer masukan
         cout << "Masukkan NISN: ";
-        cin >> siswa.NISN;
+        getline(cin, siswa.NISN);
         cout << "Masukkan Nama: ";
-        cin.ignore(); 
         getline(cin, siswa.NAMA);
         cout << "Masukkan Jenis Kelamin: ";
-        cin >> siswa.JENIS_KELAMIN;
+        getline(cin, siswa.JENIS_KELAMIN);
         cout << "Masukkan TTL: ";
-        cin.ignore();
         getline(cin, siswa.TTL);
         cout << "Masukkan NIK: ";
-        cin >> siswa.NIK;
+        getline(cin, siswa.NIK);
         cout << "Masukkan No.KK: ";
-        cin >> siswa.No_KK;
+        getline(cin, siswa.No_KK);
         cout << "Masukkan Agama: ";
-        cin >> siswa.AGAMA;
+        getline(cin, siswa.AGAMA);
         cout << "Masukkan Alamat Rumah: ";
-        cin.ignore();
         getline(cin, siswa.ALAMAT_RUMAH);
         cout << "Masukkan No.HP: ";
-        cin >> siswa.No_HP;
+        getline(cin, siswa.No_HP);
         cout << "Masukkan Email: ";
-        cin >> siswa.Email;
+        getline(cin, siswa.Email);
 
-        string nik = enkripsi_int(siswa.NIK);
-        string kk = enkripsi_int(siswa.No_KK);
-        string alamat = enkripsi_text(siswa.ALAMAT_RUMAH);
+        string nik_enkripsi = enkripsi_text(siswa.NIK);
+        string kk_enkripsi = enkripsi_text(siswa.No_KK);
+        string alamat_enkripsi = enkripsi_text(siswa.ALAMAT_RUMAH);
 
+        // Menyimpan data ke dalam file
         ofstream outputFile(user + ".txt", ios::app);
         if (outputFile.is_open()) 
         {
-            outputFile << "NIS: " << siswa.NIS << ", ";
-            outputFile << "NISN: " << siswa.NISN << ", ";
-            outputFile << "Nama: " << siswa.NAMA << ", ";
-            outputFile << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << ", ";
-            outputFile << "TTL: " << siswa.TTL << ", ";
-            outputFile << "NIK: " << nik << ", ";
-            outputFile << "No.KK: " << kk << ", ";
-            outputFile << "Agama: " << siswa.AGAMA << ", ";
-            outputFile << "Alamat Rumah: " << alamat << ", ";
-            outputFile << "No.HP: " << siswa.No_HP << ", ";
-            outputFile << "Email: " << siswa.Email << endl;
+            outputFile << siswa.NIS << ",";
+            outputFile << siswa.NISN << ",";
+            outputFile << siswa.NAMA << ",";
+            outputFile << siswa.JENIS_KELAMIN << ",";
+            outputFile << siswa.TTL << ",";
+            outputFile << nik_enkripsi << ",";
+            outputFile << kk_enkripsi << ",";
+            outputFile << siswa.AGAMA << ",";
+            outputFile << alamat_enkripsi << ",";
+            outputFile << siswa.No_HP << ",";
+            outputFile << siswa.Email << endl;
+
             outputFile.close();
             cout << "-----------------------------------------------\n";
             cout << "Input data siswa telah disimpan dalam " << user << ".txt\n";
@@ -66,30 +68,78 @@ using namespace std;
         }
     }
 
-    void outputdata(const string &user)
-{
+    void outputdata(const string &user) {
     ifstream inputFile(user + ".txt");
-    string line;
+    Siswa siswa;
 
-    if (inputFile.is_open()) 
-    {
+    if (inputFile.is_open()) {
         cout << "-----------------------------------------------\n";
-        cout << "                 Data Siswa:\n";
+        cout << "                Data Siswa:\n";
         cout << "-----------------------------------------------\n";
-        
-        // Membaca dan mencetak isi file baris demi baris
-        while (getline(inputFile, line)) 
-        {
-            cout << line << endl;
+
+        string line, nik_dekripsi, kk_dekripsi, alamat_dekripsi;
+        int count = 0; // Variabel untuk menghitung jumlah baris
+
+        // Menghitung jumlah baris dalam file
+        while (getline(inputFile, line)) {
+            count++;
         }
-        
+
+        // Mengembalikan posisi file ke awal
+        inputFile.clear();
+        inputFile.seekg(0, ios::beg);
+
+        // Loop untuk setiap baris dalam file
+        for (int i = 1; i <= count; i++) {
+            getline(inputFile, line);
+            stringstream ss(line);
+
+            // Membaca data siswa dari setiap baris
+            getline(ss, siswa.NIS, ',');
+            getline(ss, siswa.NISN, ',');
+            getline(ss, siswa.NAMA, ',');
+            getline(ss, siswa.JENIS_KELAMIN, ',');
+            getline(ss, siswa.TTL, ',');
+            getline(ss, siswa.NIK, ',');
+            getline(ss, siswa.No_KK, ',');
+            getline(ss, siswa.AGAMA, ',');
+            getline(ss, siswa.ALAMAT_RUMAH, ',');
+            getline(ss, siswa.No_HP, ',');
+            getline(ss, siswa.Email, ',');
+
+            nik_dekripsi = dekripsi_text(siswa.NIK);
+            kk_dekripsi = dekripsi_text(siswa.No_KK);
+            alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
+
+            // Menampilkan data siswa dengan nomor baris
+            cout <<"---------------------------------------" << endl;
+            cout << "              Siswa ke " << i << endl;
+            cout <<"---------------------------------------" << endl;
+            cout << "NIS: " << siswa.NIS << endl;
+            cout << "NISN: " << siswa.NISN << endl;
+            cout << "Nama: " << siswa.NAMA << endl;
+            cout << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << endl;
+            cout << "TTL: " << siswa.TTL << endl;
+            cout << "NIK: " << nik_dekripsi << endl;
+            cout << "No.KK: " << kk_dekripsi << endl;
+            cout << "Agama: " << siswa.AGAMA << endl;
+            cout << "Alamat Rumah: " << alamat_dekripsi << endl;
+            cout << "No.HP: " << siswa.No_HP << endl;
+            cout << "Email: " << siswa.Email << endl;
+            cout << endl;
+        }
+
         inputFile.close();
-    } 
-    else 
-    {
+    } else {
         cerr << "Filenya tidak bisa dibuka.\n";
     }
 }
+
+
+
+
+
+
 
     void pilihan(const string &user)
     {
