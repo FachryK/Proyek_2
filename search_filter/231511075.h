@@ -1,20 +1,10 @@
-#ifndef STUDENT_H
-#define STUDENT_H
+#ifndef SEARCH_H
+#define SEARCH_H
 
 #include <string>
+#include "../input_output/231511084.h" // Include header file yang berisi definisi struct Siswa
 
-class Student
-{
-public:
-    // Konstruktor
-    Student(const std::string &name);
+// Fungsi untuk melakukan pencarian berdasarkan nama
+void searchByName(const std::string &user, const std::string &nama);
 
-    // Getter untuk nama mahasiswa
-    std::string getName() const;
-
-private:
-    // Properti pribadi
-    std::string name;
-};
-
-#endif // STUDENT_H
+#endif // SEARCH_H

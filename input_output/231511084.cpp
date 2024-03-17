@@ -4,59 +4,62 @@
 #include <sstream>
 using namespace std;
 #include "231511084.h"
-#include "../security/231511069.cpp"
+#include "../security/231511069.h"
+#include "../login/231511096.h"
 
     Siswa siswa;
 
-    void inputdata() 
+    void inputdata(const string &user) 
     {
+        Siswa siswa;
+
         cout << "Masukkan NIS: ";
         cin >> siswa.NIS;
+        cin.ignore(); // Membersihkan karakter newline dari buffer masukan
         cout << "Masukkan NISN: ";
-        cin >> siswa.NISN;
+        getline(cin, siswa.NISN);
         cout << "Masukkan Nama: ";
-        cin.ignore(); 
         getline(cin, siswa.NAMA);
         cout << "Masukkan Jenis Kelamin: ";
-        cin >> siswa.JENIS_KELAMIN;
+        getline(cin, siswa.JENIS_KELAMIN);
         cout << "Masukkan TTL: ";
-        cin.ignore();
         getline(cin, siswa.TTL);
         cout << "Masukkan NIK: ";
-        cin >> siswa.NIK;
+        getline(cin, siswa.NIK);
         cout << "Masukkan No.KK: ";
-        cin >> siswa.No_KK;
+        getline(cin, siswa.No_KK);
         cout << "Masukkan Agama: ";
-        cin >> siswa.AGAMA;
+        getline(cin, siswa.AGAMA);
         cout << "Masukkan Alamat Rumah: ";
-        cin.ignore();
         getline(cin, siswa.ALAMAT_RUMAH);
         cout << "Masukkan No.HP: ";
-        cin >> siswa.No_HP;
+        getline(cin, siswa.No_HP);
         cout << "Masukkan Email: ";
-        cin >> siswa.Email;
+        getline(cin, siswa.Email);
 
-        string nik = enkripsi_text(siswa.NIK);
-        string kk = enkripsi_text(siswa.No_KK);
-        string alamat = enkripsi_text(siswa.ALAMAT_RUMAH);
+        string nik_enkripsi = enkripsi_text(siswa.NIK);
+        string kk_enkripsi = enkripsi_text(siswa.No_KK);
+        string alamat_enkripsi = enkripsi_text(siswa.ALAMAT_RUMAH);
 
-        ofstream outputFile("siswa.txt", ios::app);
+        // Menyimpan data ke dalam file
+        ofstream outputFile(user + ".txt", ios::app);
         if (outputFile.is_open()) 
         {
-            outputFile << "NIS: " << siswa.NIS << ", ";
-            outputFile << "NISN: " << siswa.NISN << ", ";
-            outputFile << "Nama: " << siswa.NAMA << ", ";
-            outputFile << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << ", ";
-            outputFile << "TTL: " << siswa.TTL << ", ";
-            outputFile << "NIK: " << nik << ", ";
-            outputFile << "No.KK: " << kk << ", ";
-            outputFile << "Agama: " << siswa.AGAMA << ", ";
-            outputFile << "Alamat Rumah: " << alamat << ", ";
-            outputFile << "No.HP: " << siswa.No_HP << ", ";
-            outputFile << "Email: " << siswa.Email << endl;
+            outputFile << siswa.NIS << ",";
+            outputFile << siswa.NISN << ",";
+            outputFile << siswa.NAMA << ",";
+            outputFile << siswa.JENIS_KELAMIN << ",";
+            outputFile << siswa.TTL << ",";
+            outputFile << nik_enkripsi << ",";
+            outputFile << kk_enkripsi << ",";
+            outputFile << siswa.AGAMA << ",";
+            outputFile << alamat_enkripsi << ",";
+            outputFile << siswa.No_HP << ",";
+            outputFile << siswa.Email << endl;
+
             outputFile.close();
             cout << "-----------------------------------------------\n";
-            cout << "Input data siswa telah disimpan dalam siswa.txt\n";
+            cout << "Input data siswa telah disimpan dalam " << user << ".txt\n";
             cout << "-----------------------------------------------\n";
         } 
         else 
@@ -65,58 +68,102 @@ using namespace std;
         }
     }
 
-    void outputdata()
-    {
+    void outputdata(const string &user) {
+    ifstream inputFile(user + ".txt");
+    Siswa siswa;
 
-        ifstream inputFile("siswa.txt");
-        string line;
+    if (inputFile.is_open()) {
+        cout << "-----------------------------------------------\n";
+        cout << "                Data Siswa:\n";
+        cout << "-----------------------------------------------\n";
 
-        if (inputFile.is_open()) 
-        {
-            cout << "-----------------------------------------------\n";
-            cout << "                 Data Siswa:\n";
-            cout << "-----------------------------------------------\n";
-            while (getline(inputFile, line)) 
-            { 
-                istringstream iss(line); 
-                string field; 
-                while (getline(iss, field, ',')) 
-                {
-                    cout << field << endl; 
-                }
-                cout << endl; 
-            }
-            inputFile.close();
-        } 
-        else 
-        {
-            cerr << "Filenya tidak bisa dibuka.\n";
+        string line, nik_dekripsi, kk_dekripsi, alamat_dekripsi;
+        int count = 0; // Variabel untuk menghitung jumlah baris
+
+        // Menghitung jumlah baris dalam file
+        while (getline(inputFile, line)) {
+            count++;
         }
-    }
 
-    void pilihan()
+        // Mengembalikan posisi file ke awal
+        inputFile.clear();
+        inputFile.seekg(0, ios::beg);
+
+        // Loop untuk setiap baris dalam file
+        for (int i = 1; i <= count; i++) {
+            getline(inputFile, line);
+            stringstream ss(line);
+
+            // Membaca data siswa dari setiap baris
+            getline(ss, siswa.NIS, ',');
+            getline(ss, siswa.NISN, ',');
+            getline(ss, siswa.NAMA, ',');
+            getline(ss, siswa.JENIS_KELAMIN, ',');
+            getline(ss, siswa.TTL, ',');
+            getline(ss, siswa.NIK, ',');
+            getline(ss, siswa.No_KK, ',');
+            getline(ss, siswa.AGAMA, ',');
+            getline(ss, siswa.ALAMAT_RUMAH, ',');
+            getline(ss, siswa.No_HP, ',');
+            getline(ss, siswa.Email, ',');
+
+            nik_dekripsi = dekripsi_text(siswa.NIK);
+            kk_dekripsi = dekripsi_text(siswa.No_KK);
+            alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
+
+            // Menampilkan data siswa dengan nomor baris
+            cout <<"---------------------------------------" << endl;
+            cout << "              Siswa ke " << i << endl;
+            cout <<"---------------------------------------" << endl;
+            cout << "NIS: " << siswa.NIS << endl;
+            cout << "NISN: " << siswa.NISN << endl;
+            cout << "Nama: " << siswa.NAMA << endl;
+            cout << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << endl;
+            cout << "TTL: " << siswa.TTL << endl;
+            cout << "NIK: " << nik_dekripsi << endl;
+            cout << "No.KK: " << kk_dekripsi << endl;
+            cout << "Agama: " << siswa.AGAMA << endl;
+            cout << "Alamat Rumah: " << alamat_dekripsi << endl;
+            cout << "No.HP: " << siswa.No_HP << endl;
+            cout << "Email: " << siswa.Email << endl;
+            cout << endl;
+        }
+
+        inputFile.close();
+    } else {
+        cerr << "Filenya tidak bisa dibuka.\n";
+    }
+}
+
+
+
+
+
+
+
+    void pilihan(const string &user)
     {
         int choice;
         do
         {
-            cout << "(1) Input Data Siswa \n";
-            cout << "(2) Output Data Siswa \n";
-            cout << "(0) Exit \n";
-            cout << "Opsi      : ";
+            cout << "\t(1) Memasukkan Data Siswa \n";
+            cout << "\t(2) Menampilkan Data Siswa \n";
+            cout << "\t(0) Keluar \n";
+            cout << "\tOpsi      : ";
             cin >> choice;
             switch (choice)
             {
             case 1:
-                inputdata();
+                inputdata(user);
                 break;
             case 2:
-                outputdata();
+                outputdata(user);
                 break;
             case 0:
-                cout << "Selesai";
+                system("cls");
                 break;
             default:
-                cout << "Pilihan tidak valid";
+                cout << "\tPilihan tidak valid";
                 break;
             }
         } while (choice != 0);

@@ -11,13 +11,13 @@ struct Siswa{
     string AGAMA;
     string ALAMAT_RUMAH;
     string Email;
-    int NIS;
-    int NISN;
-    int NIK;
-    int No_KK;
-    int No_HP;
+    string NIS;
+    string NISN;
+    string NIK;
+    string No_KK;
+    string No_HP;
 };
  
-void inputdata(); 
-void outputdata();
-void pilihan(); 
+void inputdata(const string &user); 
+void outputdata(const string &user);
+void pilihan(const string &user); 
