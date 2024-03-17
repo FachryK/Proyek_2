@@ -2,13 +2,14 @@
 #include "../security/231511069.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
 string login() 
 {
     int count = 0;
-    string userId, password, id, pass;
+    string userId, password, id, pass, tes;
     system("cls");
     cout << "\t Username : ";
     cin >> userId;
@@ -42,7 +43,8 @@ string login()
     else 
     {
         cout << "----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
-        return 0;
+        tes = " ";
+        return tes;
     }
 }
 
@@ -57,24 +59,30 @@ void registrasi()
     encryptedpass = enkripsi_text(rpassword); // Anda perlu mengenkripsi password sebelum menyimpannya
 
     ifstream checkFile("record.txt");
-    string id;
+    string id, line;
     bool usernameExists = false;
 
-    // Memeriksa apakah username sudah ada dalam file
-    while (getline(checkFile, id, ',')) 
-    {
-        if (id == ruserId) 
+    if (checkFile.is_open()) {
+        while (getline(checkFile, line)) 
         {
-            usernameExists = true;
-            break;
-        }
-    }
-    checkFile.close();
+            stringstream ss(line);
+            string storedUsername;
+            getline(ss, storedUsername, ','); // Mengambil username dari token pertama
 
+            // Membandingkan username dari file dengan username yang ingin dicek
+            if (storedUsername == ruserId) 
+            {
+                usernameExists = true;
+                checkFile.close();
+                 // Username sudah ada dalam file
+            }
+        }
+        checkFile.close();
+    }
     // Jika username sudah ada, tampilkan pesan kesalahan
     if (usernameExists) 
     {
-        cout << "\n\t\t ----------Username sudah digunakan. Registrasi gagal----------\n";
+        cout << "\n\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n";
     } 
     else 
     {
@@ -83,7 +91,7 @@ void registrasi()
         f1 << ruserId << ',' << encryptedpass << endl;
         f1.close(); // Tutup file setelah selesai menulis
         system("cls");
-        ofstream outputFile( ruserId + ".txt", std::ios::app); // Bikin file sesuai dengan nama yang di input
+        ofstream outputFile(ruserId + ".txt", std::ios::app); // Bikin file sesuai dengan nama yang di input
         cout << "\n\t\t ----------Registrasi berhasil----------\n";
     }
 }
@@ -129,13 +137,16 @@ void lupaPassword()
                 cout << "\n\t ----------Maaf akun anda tidak ditemukan---------- \n";
             }
             break;
-        }
-
+        }      
         case 2:
+            system ("cls");
             break;
 
         default:
-            cout << "\t----------Pilihan tidak sesuai, silahkan coba lagi----------";
-            lupaPassword();
+            cout << "\t----------Pilihan tidak sesuai, silahkan klik enter untuk coba lagi----------\n";
+            cin.ignore();
+            cin.get();
+            system ("cls");
+            return lupaPassword();
     }
 }
