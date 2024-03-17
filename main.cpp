@@ -6,13 +6,14 @@ using namespace std;
 int main()
 {
     int c;
-    string user;
-    bool loggedIn = false; // Variable untuk menandai apakah pengguna telah login atau belum
+    string user,tes;
+     // Variable untuk menandai apakah pengguna telah login atau belum
     
     // Tampilkan pesan selamat datang hanya jika pengguna belum login
     
     do
     {
+        bool loggedIn = false;
         if (!loggedIn) 
         {
             cout << "\t============================================================\n";
@@ -35,15 +36,15 @@ int main()
         {
             case 1:
                 user = login();
-                if (loggedIn = true)
+                if (user != " ")
                 {
-                    pilihan(user);
+                    pilihan(user);                  
                 }
                 else
                 {
                     return main();
-                }
-                
+                    break;
+                }               
                 break;
 
             case 2:
