@@ -1,7 +1,8 @@
 #include "231511075.h" // Sertakan file header yang diperlukan
 #include "../security/231511069.h"
-#include <sstream> // Sertakan header yang diperlukan untuk stringstream
-#include <cctype>  // Sertakan header yang diperlukan untuk isupper
+#include <sstream>   // Sertakan header yang diperlukan untuk stringstream
+#include <cctype>    // Sertakan header yang diperlukan untuk isupper
+#include <algorithm> // Sertakan header yang diperlukan untuk transform
 
 // Fungsi untuk membersihkan karakter tersembunyi dari string
 void cleanHiddenCharacters(std::string &str)
@@ -26,10 +27,22 @@ std::string toLowercase(const std::string &str)
     return result;
 }
 
+// Fungsi untuk memeriksa apakah nama di file cocok dengan nama yang dicari sampai bagian pertama dari nama yang dicari
+bool isPartialMatch(const std::string &nama_in_file, const std::string &nama_dicari)
+{
+    // Mengonversi kedua nama menjadi huruf kecil untuk perbandingan yang tidak bersifat case-sensitive
+    std::string lowercase_nama_in_file = toLowercase(nama_in_file);
+    std::string lowercase_nama_dicari = toLowercase(nama_dicari);
+
+    // Memeriksa apakah bagian pertama dari nama di file cocok dengan nama yang dicari
+    return lowercase_nama_in_file.find(lowercase_nama_dicari) != std::string::npos;
+}
+
 void searchByName(const std::string &user, const std::string &nama)
 {
     std::ifstream inputFile(user + ".txt");
     Siswa siswa;
+    std::string nik_dekripsi, kk_dekripsi, alamat_dekripsi;
 
     if (inputFile.is_open())
     {
@@ -43,9 +56,6 @@ void searchByName(const std::string &user, const std::string &nama)
         // Membersihkan nama yang dicari dari karakter tersembunyi
         std::string cleaned_nama = nama;
         cleanHiddenCharacters(cleaned_nama);
-
-        // Konversi nama yang dicari menjadi huruf kecil
-        std::string lowercase_nama = toLowercase(cleaned_nama);
 
         // Loop melalui setiap baris dalam file
         while (getline(inputFile, line))
@@ -66,18 +76,16 @@ void searchByName(const std::string &user, const std::string &nama)
             getline(ss, siswa.No_HP, ',');
             getline(ss, siswa.Email, ',');
 
-            // Membersihkan dan mengonversi nama siswa dari karakter tersembunyi dan huruf besar
-            std::string cleaned_siswa_nama = siswa.NAMA;
-            cleanHiddenCharacters(cleaned_siswa_nama);
-            std::string lowercase_siswa_nama = toLowercase(cleaned_siswa_nama);
-
-            // Dekripsi data yang diperlukan
             nik_dekripsi = dekripsi_text(siswa.NIK);
             kk_dekripsi = dekripsi_text(siswa.No_KK);
             alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
 
+            // Membersihkan dan mengonversi nama siswa dari karakter tersembunyi dan huruf besar
+            std::string cleaned_siswa_nama = siswa.NAMA;
+            cleanHiddenCharacters(cleaned_siswa_nama);
+
             // Jika nama yang dicari ditemukan, tampilkan data siswa tersebut
-            if (lowercase_siswa_nama == lowercase_nama)
+            if (isPartialMatch(cleaned_siswa_nama, cleaned_nama))
             {
                 found = true;
                 std::cout << "---------------------------------------\n";
