@@ -43,6 +43,7 @@ void searchByName(const std::string &user, const std::string &nama)
             if (siswa.NAMA == nama)
             {
                 found = true;
+                std::cout << "---------------------------------------\n";
                 std::cout << "Data siswa dengan nama '" << nama << "' ditemukan:\n";
                 std::cout << "---------------------------------------\n";
                 std::cout << "NIS: " << siswa.NIS << std::endl;
@@ -64,7 +65,10 @@ void searchByName(const std::string &user, const std::string &nama)
         // Jika nama tidak ditemukan
         if (!found)
         {
+            std::cout << "---------------------------------------\n";
             std::cout << "Data siswa dengan nama '" << nama << "' tidak ditemukan.\n";
+            std::cout << "---------------------------------------\n";
+           
         }
 
         inputFile.close();
