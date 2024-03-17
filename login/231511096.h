@@ -7,8 +7,8 @@
 #include <cstdlib>
 using namespace std;
 
-string login();
-void registrasi();
-void lupaPassword();
+string login(); //deklarasi fungsi login
+void registrasi(); //deklarasi fungsi registrasi
+void lupaPassword(); //deklarasi fungsi lupaPassword
 
 #endif // _231511096_H
