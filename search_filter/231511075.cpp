@@ -1,83 +1,76 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <algorithm> // untuk transform()
+#include "231511075.h" // Sertakan file header yang diperlukan
+#include "../security/231511069.h"
+#include <sstream> // Sertakan header yang diperlukan untuk stringstream
 
-// Struktur data untuk menyimpan informasi siswa
-struct Siswa
+void searchByName(const std::string &user, const std::string &nama)
 {
-    std::string NAMA;
-    // Tambahkan atribut lain jika diperlukan
-};
+    std::ifstream inputFile(user + ".txt");
+    Siswa siswa;
 
-// Fungsi untuk membaca data siswa dari file teks
-std::vector<Siswa> readSiswaFromFile(const std::string &filename)
-{
-    std::ifstream file(filename);
-    std::vector<Siswa> siswaList;
-
-    if (file.is_open())
+    if (inputFile.is_open())
     {
+        bool found = false;
         std::string line;
-        while (std::getline(file, line))
+        int count = 0;
+
+        // Deklarasi variabel dekripsi di sini
+        std::string nik_dekripsi, kk_dekripsi, alamat_dekripsi;
+
+        // Loop melalui setiap baris dalam file
+        while (getline(inputFile, line))
         {
-            // Menghapus karakter yang tidak diinginkan (jika ada)
-            line.erase(std::remove(line.begin(), line.end(), '\r'), line.end()); // Menghapus karakter '\r' jika ada
-            line.erase(std::remove(line.begin(), line.end(), '\n'), line.end()); // Menghapus karakter '\n' jika ada
+            count++;
+            std::istringstream ss(line); // Ubah menjadi std::istringstream
 
-            // Transformasi nama menjadi lowercase (menghindari masalah perbedaan huruf besar/kecil)
-            std::transform(line.begin(), line.end(), line.begin(), ::tolower);
+            // Membaca data siswa dari setiap baris
+            getline(ss, siswa.NIS, ',');
+            getline(ss, siswa.NISN, ',');
+            getline(ss, siswa.NAMA, ',');
+            getline(ss, siswa.JENIS_KELAMIN, ',');
+            getline(ss, siswa.TTL, ',');
+            getline(ss, siswa.NIK, ',');
+            getline(ss, siswa.No_KK, ',');
+            getline(ss, siswa.AGAMA, ',');
+            getline(ss, siswa.ALAMAT_RUMAH, ',');
+            getline(ss, siswa.No_HP, ',');
+            getline(ss, siswa.Email, ',');
+                // Dekripsi data yang diperlukan
+                nik_dekripsi = dekripsi_text(siswa.NIK);
+            kk_dekripsi = dekripsi_text(siswa.No_KK);
+            alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
 
-            Siswa siswa;
-            siswa.NAMA = line;
-            siswaList.push_back(siswa);
+            // Jika nama yang dicari ditemukan, tampilkan data siswa tersebut
+            if (siswa.NAMA == nama)
+            {
+                found = true;
+                std::cout << "Data siswa dengan nama '" << nama << "' ditemukan:\n";
+                std::cout << "---------------------------------------\n";
+                std::cout << "NIS: " << siswa.NIS << std::endl;
+                std::cout << "NISN: " << siswa.NISN << std::endl;
+                std::cout << "Nama: " << siswa.NAMA << std::endl;
+                std::cout << "Jenis Kelamin: " << siswa.JENIS_KELAMIN << std::endl;
+                std::cout << "TTL: " << siswa.TTL << std::endl;
+                std::cout << "NIK: " << nik_dekripsi << std::endl;
+                std::cout << "No.KK: " << kk_dekripsi << std::endl;
+                std::cout << "Agama: " << siswa.AGAMA << std::endl;
+                std::cout << "Alamat Rumah: " << alamat_dekripsi << std::endl;
+                std::cout << "No.HP: " << siswa.No_HP << std::endl;
+                std::cout << "Email: " << siswa.Email << std::endl;
+                std::cout << std::endl;
+                break; // Keluar dari loop setelah menemukan nama yang dicari
+            }
         }
-        file.close();
-    }
 
-    return siswaList;
-}
-
-// Fungsi pencarian siswa berdasarkan nama
-Siswa searchSiswaByName(const std::vector<Siswa> &siswaList, const std::string &name)
-{
-    std::string lowercaseName = name;
-    // Mengubah input nama menjadi lowercase untuk membandingkan dengan nama dalam file
-    std::transform(lowercaseName.begin(), lowercaseName.end(), lowercaseName.begin(), ::tolower);
-
-    for (const auto &siswa : siswaList)
-    {
-        // Mengubah nama dalam file menjadi lowercase dan membandingkannya dengan nama yang diinputkan
-        if (siswa.NAMA == lowercaseName)
+        // Jika nama tidak ditemukan
+        if (!found)
         {
-            return siswa;
+            std::cout << "Data siswa dengan nama '" << nama << "' tidak ditemukan.\n";
         }
-    }
-    // Jika siswa tidak ditemukan, kembalikan siswa dengan nama kosong
-    return Siswa{"", /* tambahkan atribut lain jika diperlukan */};
-}
 
-int main()
-{
-    // Baca data siswa dari file teks
-    std::vector<Siswa> siswaList = readSiswaFromFile("siswa.txt");
-
-    std::string searchName;
-    std::cout << "Masukkan Nama yang dicari : ";
-    std::getline(std::cin, searchName); // Menggunakan std::getline untuk membaca spasi pada input
-
-    // Cari siswa berdasarkan nama
-    Siswa result = searchSiswaByName(siswaList, searchName);
-
-    if (result.NAMA != "")
-    {
-        std::cout << "Mahasiswa dengan nama " << result.NAMA << " ditemukan." << std::endl;
+        inputFile.close();
     }
     else
     {
-        std::cout << "Mahasiswa dengan nama " << searchName << " tidak ditemukan." << std::endl;
+        std::cerr << "Filenya tidak bisa dibuka.\n";
     }
-
-    return 0;
 }
