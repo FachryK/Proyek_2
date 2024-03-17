@@ -1,7 +1,3 @@
-#include "231511075.h" // Sertakan file header yang diperlukan
-#include "../security/231511069.h"
-#include <sstream> // Sertakan header yang diperlukan untuk stringstream
-
 void searchByName(const std::string &user, const std::string &nama)
 {
     std::ifstream inputFile(user + ".txt");
@@ -9,6 +5,8 @@ void searchByName(const std::string &user, const std::string &nama)
 
     if (inputFile.is_open())
     {
+        std::cout << "Mencari siswa dengan nama '" << nama << "'...\n"; // Pesan pencarian
+
         bool found = false;
         std::string line;
         int count = 0;
@@ -34,8 +32,9 @@ void searchByName(const std::string &user, const std::string &nama)
             getline(ss, siswa.ALAMAT_RUMAH, ',');
             getline(ss, siswa.No_HP, ',');
             getline(ss, siswa.Email, ',');
-                // Dekripsi data yang diperlukan
-                nik_dekripsi = dekripsi_text(siswa.NIK);
+
+            // Dekripsi data yang diperlukan
+            nik_dekripsi = dekripsi_text(siswa.NIK);
             kk_dekripsi = dekripsi_text(siswa.No_KK);
             alamat_dekripsi = dekripsi_text(siswa.ALAMAT_RUMAH);
 
@@ -68,7 +67,6 @@ void searchByName(const std::string &user, const std::string &nama)
             std::cout << "---------------------------------------\n";
             std::cout << "Data siswa dengan nama '" << nama << "' tidak ditemukan.\n";
             std::cout << "---------------------------------------\n";
-           
         }
 
         inputFile.close();
