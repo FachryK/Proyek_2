@@ -6,57 +6,59 @@
 
 using namespace std;
 
-string login() 
+string login() // Mendefinisikan fungsi login yang mengembalikan string
 {
-    int count = 0;
+    int count = 0; // Mendeklarasikan variabel count dan menginisialisasikannya dengan nilai 0
     string userId, password, id, pass, tes;
-    system("cls");
+    system("cls"); // Memanggil perintah sistem untuk membersihkan layar konsol
+    cout << "\n\n\t----------Silahkan Masukkan Username dan Password Anda----------\n";
     cout << "\t Username : ";
     cin >> userId;
     cout << "\t Password : ";
     cin >> password;
 
-    ifstream input("record.txt");
+    ifstream input("record.txt"); // Membuka file record.txt untuk dibaca
 
-    if (input.is_open()) 
+    if (input.is_open()) // Memeriksa apakah file berhasil dibuka
     {
-        while (getline(input, id, ',') && getline(input, pass)) 
+        while (getline(input, id, ',') && getline(input, pass)) // Membaca data dari file baris per baris
         {
-            string decryptedPass = dekripsi_text(pass);
-            if (id == userId && decryptedPass == password) 
+            string decryptedPass = dekripsi_text(pass); // Mendekripsi password yang dibaca dari file
+            if (id == userId && decryptedPass == password) // Memeriksa apakah username dan password cocok
             {
-                count = 1;
+                count = 1; // Mengubah nilai count menjadi 1
                 system("cls");
-                break;
+                break; // Keluar dari loop
             }
         }
-        input.close();
+        input.close(); // Menutup file setelah selesai membacanya
     }
 
-    if (count == 1) 
+    if (count == 1) // Jika count sama dengan 1
     {
         string user;
-        cout << userId << "\n\n----------Login berhasil!----------\n\n";
+        cout <<"\n"<< userId << "\n----------Login berhasil!----------\n\n";
         user = userId;
         return user;
     } 
-    else 
+    else // Jika count tidak sama dengan 1
     {
-        cout << "----------Login eror! Cek Username dan Password yang anda masukkan----------\n";
+        cout << "\n----------Login eror! Cek Username dan Password yang anda masukkan----------\n\n";
         tes = " ";
         return tes;
     }
 }
 
-void registrasi() 
+void registrasi() //Mendeskripsikan fungsi registrasi
 {
     string ruserId, rpassword, encryptedpass;
     system("cls");
+    cout << "\n\n\t----------Silahkan Buat Akun Anda----------\n";
     cout << "\t Username : ";
     cin >> ruserId;
     cout << "\t Password : ";
     cin >> rpassword;
-    encryptedpass = enkripsi_text(rpassword); // Anda perlu mengenkripsi password sebelum menyimpannya
+    encryptedpass = enkripsi_text(rpassword); //Untuk mengenkripsi password sebelum menyimpannya
 
     ifstream checkFile("record.txt");
     string id, line;
@@ -65,14 +67,14 @@ void registrasi()
     if (checkFile.is_open()) {
         while (getline(checkFile, line)) 
         {
-            stringstream ss(line);
-            string storedUsername;
+            stringstream ss(line); // Membuat stringstream dari baris yang dibaca
+            string storedUsername; // Mendeklarasikan variabel bertipe string
             getline(ss, storedUsername, ','); // Mengambil username dari token pertama
 
             // Membandingkan username dari file dengan username yang ingin dicek
             if (storedUsername == ruserId) 
             {
-                usernameExists = true;
+                usernameExists = true;  // Mengubah nilai usernameExists menjadi true
                 checkFile.close();
                  // Username sudah ada dalam file
             }
@@ -82,21 +84,20 @@ void registrasi()
     // Jika username sudah ada, tampilkan pesan kesalahan
     if (usernameExists) 
     {
-        cout << "\n\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n";
+        cout << "\n\t\t ----------Username tidak bisa digunakan. Registrasi gagal----------\n\n";
     } 
     else 
     {
         // Jika username belum ada, lakukan registrasi
-        ofstream f1("record.txt", ios::app);
-        f1 << ruserId << ',' << encryptedpass << endl;
+        ofstream f1("record.txt", ios::app); // Membuka file record.txt untuk ditambahkan data
+        f1 << ruserId << ',' << encryptedpass << endl; // Menulis username dan password yang terenkripsi ke dalam file
         f1.close(); // Tutup file setelah selesai menulis
-        system("cls");
         ofstream outputFile(ruserId + ".txt", std::ios::app); // Bikin file sesuai dengan nama yang di input
-        cout << "\n\t\t ----------Registrasi berhasil----------\n";
+        cout << "\n\t\t ----------Registrasi berhasil----------\n\n";
     }
 }
 
-void lupaPassword() 
+void lupaPassword() //Mendeskripsikan fungsi lupaPassword
 {
     int option;
     system("cls");
@@ -105,7 +106,8 @@ void lupaPassword()
     cout << "Ketik 2 untuk keluar " << endl;
     cout << "\t Pilihan anda : ";
     cin >> option;
-    switch (option) 
+
+    switch (option) // Memeriksa nilai option
     {
         case 1: 
         {
@@ -119,7 +121,7 @@ void lupaPassword()
             ifstream f2("record.txt");
             while (getline(f2, sId, ',') && getline(f2, encryptedPass)) 
             {
-                decryptedPass = dekripsi_text(encryptedPass); // Dekripsi password di sini
+                decryptedPass = dekripsi_text(encryptedPass); // Mendekripsi password 
                 if (sId == suserId) 
                 {
                     count = 1;
@@ -129,12 +131,12 @@ void lupaPassword()
             f2.close();
             if (count == 1) 
             {
-                cout << "\n\t----------Akun anda ditemukan!----------\n";
-                cout << "\t Password akun anda :" << decryptedPass << endl;
+                cout << "\t\n----------Akun anda ditemukan!----------\n";
+                cout << "\tPassword akun anda :" << decryptedPass << endl;
             } 
             else 
             {
-                cout << "\n\t ----------Maaf akun anda tidak ditemukan---------- \n";
+                cout << "\t\n----------Maaf akun anda tidak ditemukan----------\n\n";
             }
             break;
         }      
@@ -143,7 +145,7 @@ void lupaPassword()
             break;
 
         default:
-            cout << "\t----------Pilihan tidak sesuai, silahkan klik enter untuk coba lagi----------\n";
+            cout << "\t----------Pilihan tidak sesuai, silahkan klik enter untuk coba lagi----------\n\n";
             cin.ignore();
             cin.get();
             system ("cls");

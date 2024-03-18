@@ -6,16 +6,17 @@ using namespace std;
 int main()
 {
     int c;
-    string user;
-    bool loggedIn = false; // Variable untuk menandai apakah pengguna telah login atau belum
+    string user,tes;
+     // Variable untuk menandai apakah pengguna telah login atau belum
     
     // Tampilkan pesan selamat datang hanya jika pengguna belum login
     
     do
     {
+        bool loggedIn = false;
         if (!loggedIn) 
         {
-            cout << "\t============================================================\n";
+            cout << "\n\t============================================================\n";
             cout << "\t|                   SELAMAT DATANG DI                      |\n";
             cout << "\t|                APLIKASI SAVE DATA SISWA                  |\n";
             cout << "\t============================================================\n";
@@ -35,15 +36,15 @@ int main()
         {
             case 1:
                 user = login();
-                if (loggedIn = true)
+                if (user != " ")
                 {
-                    pilihan(user);
+                    pilihan(user);                  
                 }
                 else
                 {
                     return main();
-                }
-                
+                    break;
+                }               
                 break;
 
             case 2:
@@ -54,7 +55,7 @@ int main()
                 break;
             default:
                 system("cls");
-                cout << "\t ----------Terimakasih----------\n" << endl;
+                cout << "\n\n\t\t\t\t----------Terimakasih----------\n" << endl;
         }
     } while (c != 4);
 }

@@ -1,8 +1,8 @@
 #include "231511075.h" // Sertakan file header yang diperlukan
 #include "../security/231511069.h"
-#include <sstream>   // Sertakan header yang diperlukan untuk stringstream
-#include <cctype>    // Sertakan header yang diperlukan untuk isupper
-#include <algorithm> // Sertakan header yang diperlukan untuk transform
+#include <sstream>   // digunakan untuk membaca data dari string menggunakan operasi seperti getline()
+#include <cctype>    // berguna utk mengubah karakter (isprint) dan digunakan utk konversi karakter menjadi huruf kecil (toLowercase)
+#include <algorithm> // sama dengan cctype, bedanya cctype berfokus pada karakter itu sendiri dan algorithm  berfokus pada operasi umum pada rangkaian elemen, termasuk string.
 
 // Fungsi untuk membersihkan karakter tersembunyi dari string
 void cleanHiddenCharacters(std::string &str)
