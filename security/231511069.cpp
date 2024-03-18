@@ -12,7 +12,7 @@ std::string enkripsi_text(const std::string &text)
     std::string modifiedText = text;
     if (text.length() % 2 != 0)
     {
-        modifiedText += '0'; // Menambahkan satu karakter '0' jika panjang teks ganjil
+        modifiedText += '@'; // Menambahkan satu karakter '@' jika panjang teks ganjil
     }
     const unsigned char *input = (const unsigned char *)modifiedText.c_str();
     int panjang_text = modifiedText.length();
@@ -57,7 +57,7 @@ std::string dekripsi_text(const std::string &text)
     std::string hasil = hasil_dekripsi.str();
 
     // Hapus karakter '0' terakhir jika ada
-    if (hasil.length() > 0 && hasil[hasil.length() - 1] == '0') 
+    if (hasil.length() > 0 && hasil[hasil.length() - 1] == '@') 
     {
         hasil.erase(hasil.length() - 1);
     }
